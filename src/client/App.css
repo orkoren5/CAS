@@ -1,0 +1,71 @@
+
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  overflow: auto;
+  padding: 20px;
+  gap: 12px;
+  position: relative;
+}
+
+.app-btn {
+  border-radius: 20px !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.form-word {
+  position: absolute;
+  padding: 1px;
+  transform: translate(-2px, -2px);
+  box-sizing: content-box;
+  border: 1px solid gold;
+  z-index: 1;
+}
+
+.word {
+  position: absolute;
+  color: transparent;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.word--selected {
+  opacity: 1;
+  background-color: #00FFFFAA !important;
+}
+
+.word--tagged, .word--tagged.word--suspect {
+  opacity: 1;
+  background-color: #FFFF00AA;
+}
+
+.word--suspect {
+  opacity: 1;
+  background-color: #FFAA33AA;
+}
+
+.document-container {
+  position: relative;
+}
+
+.react-pdf__Page__textContent {
+  transform: unset !important;
+  left: unset !important;
+  top: 2px !important;
+}
+
+.tag-table {
+    position: absolute;
+    max-width: 300px;
+    left: -86px;
+    top: calc(50% - 20px);
+}

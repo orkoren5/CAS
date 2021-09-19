@@ -1,0 +1,65 @@
+.scenario-dialog {
+    .scenario-dialog__title {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .step-one {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+
+        .last-row {
+            display: flex;
+            gap: 50px;
+        }
+        .long-lat {
+            flex-grow: 2;
+            .lon {
+                margin-left: 10px;
+            }
+        }
+        .last-row-content {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 12px;
+        }
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: -20px;
+        }
+        .progress-bar {
+            background-color: #50E3C2;
+        }
+        .upload-title {
+            margin-bottom: -15px;
+        }
+    }
+
+    .step-two {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .provider-title {
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .targets-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            
+            &.no-targets {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    }
+}

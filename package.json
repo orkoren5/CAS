@@ -1,0 +1,77 @@
+{
+  "name": "CAS",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@babel/runtime": "^7.14.6",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.5.1",
+    "@types/papaparse": "^5.2.6",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.8",
+    "axios": "^0.21.1",
+    "img-loader": "^4.0.0",
+    "papaparse": "^5.3.1",
+    "react": "17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router": "5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-dropzone": "^11.4.0",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
+  },
+  "scripts": {
+    "start": "concurrently -k \"npm run start:server\" \"npm run start:client\"",
+    "start:client": "webpack -w",
+    "build:server": "babel src --out-dir dist --out-file-extension .js --ignore src/node_modules/**/* --only src/server,src/common --extensions .ts",
+    "prebuild:server": "mkdir dist\\common & mkdir dist\\server & copy src\\server\\package.json dist\\server\\package.json && cd dist\\server && npm install",
+    "start:server": "npm run build:server && node dist/server",
+    "build": "webpack --mode production"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/node": "^7.14.7",
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.10.4",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-jsx-pragmatic": "^1.0.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^8.1.1",
+    "css-loader": "^5.2.4",
+    "file-loader": "^6.2.0",
+    "url-loader": "^1.0.1",
+    "html-webpack-plugin": "^5.3.1",
+    "redux-devtools-extension": "^2.13.9",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^2.0.0",
+    "typescript": "^4.1.2",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^3.x.x",
+    "webpack-node-externals": "^2.5.1"
+  }
+}
