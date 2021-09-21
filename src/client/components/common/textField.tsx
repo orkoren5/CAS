@@ -4,15 +4,26 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
-        backgroundColor: "#0D182C"
+        backgroundColor: "#0D182C",
+        "&:before": {
+            borderBottom: "none !important"
+        }
     },
     inputInput: {
         padding: "6px 0 7px 8px",
-        fontSize: 12,
-        color: "rgba(255, 255, 255, 0.7)"
+        fontSize: 14,
+        lineHeight: "27px",
+        height: "unset",
+        color: theme.palette.text.secondary,
+        "&.Mui-disabled": {
+            paddingLeft: 0
+        }
     },
     withLabel: {
-        marginTop: "24px !important"
+        marginTop: "32px !important"
+    },
+    labelShrink: {
+        fontSize: 21
     }
 }));
 
@@ -22,9 +33,12 @@ const TextField = (props: MuiTextFieldProps) => {
     return <MuiTextField
         {...props}
         InputLabelProps={{
+            ...props.InputLabelProps,
             shrink: true,
+            classes: { shrink: classes.labelShrink }
         }}
         InputProps={{
+            ...props.InputProps,
             classes: {
                 root: classes.inputRoot + " " + (props.label ? classes.withLabel : ""),
                 input: classes.inputInput

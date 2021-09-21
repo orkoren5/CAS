@@ -1,6 +1,19 @@
 import {ProviderData} from "../components/ScenarioDialog/stepTwo";
 
-const fetch = (route: string, options: Record<string, any>): Promise<any> => {
+type MockFetchRes<T> = { json: () => Promise<T>, status: number };
+
+const wrapFetch = <T>(jsonResponse: T, timeout = 0): Promise<MockFetchRes<T>> => {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({
+                json: () => new Promise((res) => res(jsonResponse)),
+                status: 200
+            });
+        }, timeout);
+    });
+}
+
+const fetch = <T>(route: string, options: Record<string, any>): Promise<MockFetchRes<T>> => {
     switch (route) {
         case "/uploadCSV": {
             const csv = options.body.get("csv");
@@ -32,14 +45,15 @@ const fetch = (route: string, options: Record<string, any>): Promise<any> => {
                 }
             ]
 
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    resolve(mockProviders);
-                }, 1000);
-            });
+            return wrapFetch(mockProviders, 1000);
+        }
+        case "/addScenario": {
+            const scenario = options.body;
+            const now = new Date().toISOString();
+            return wrapFetch({...scenario, id: now, creationDate: now, lastSaveDate: now}, 1000);
         }
     }
-    return new Promise(resolve => resolve(""));
+    return new Promise(resolve => resolve(wrapFetch("")));
 }
 
 export default fetch;

@@ -12,6 +12,11 @@ export default createTheme({
         },
         action: {
             hover: "#112033"
+        },
+        text: {
+            primary: "#d7dee8",
+            disabled: "#d7dee8",
+            secondary: "#acbccf"
         }
         // divider: deepOrange[700],
         // background: {
@@ -24,6 +29,11 @@ export default createTheme({
         // },
     },
     overrides: {
+        MuiDialog: {
+            paperWidthMd: {
+                maxWidth: 870
+            }
+        },
         MuiDialogTitle: {
             root: {
                 padding: "5px 20px"
@@ -31,6 +41,7 @@ export default createTheme({
         },
         MuiFormLabel: {
             root: {
+                color: "#d7dee8",
                 "&.Mui-focused": {
                     color: "white"
                 }
@@ -45,16 +56,28 @@ export default createTheme({
         },
         MuiTableCell: {
             head: {
-                lineHeight: "12px",
+                lineHeight: "24px",
                 backgroundColor: "#072041"
             },
             stickyHeader: {
                 backgroundColor: "#072041"
             },
             root: {
-                fontSize: "12px",
-                lineHeight: "12px",
+                fontSize: "14px",
+                lineHeight: "30px",
                 borderBottom: 0
+            }
+        },
+        MuiStepLabel: {
+            label: {
+                "&.MuiStepLabel-completed": {
+                    color: "#2a486f"
+                }
+            }
+        },
+        MuiTypography: {
+            h6: {
+                fontSize: 26
             }
         }
     }

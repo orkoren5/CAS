@@ -5,20 +5,21 @@ import StepLabel from "@material-ui/core/StepLabel/StepLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import cx from "classNames";
 import {StepConnector} from "@material-ui/core";
+import CheckCircle from "@material-ui/icons/CheckCircle";
 
 const useStyles = makeStyles((theme) => ({
     stepperRoot: {
         backgroundColor: "#072041",
         padding: "12px 20px",
         marginLeft: "-8px",
-        gap: 12
+        gap: 90
     },
     alternativeLabel: {
         flex: "none"
     },
     label: {
         marginTop: "3px !important",
-        fontSize: "11px"
+        fontSize: 16
     },
     labelRoot: {
         color: "#072041"
@@ -31,16 +32,23 @@ const useStyles = makeStyles((theme) => ({
         color: "rgba(255, 255, 255, 0.7)"
     },
     stepConnector: {
-        borderTopStyle: "dashed"
+        borderTopStyle: "dashed",
+        borderWidth: "2px",
+    },
+    connectorLabel: {
+        top: 24,
+        left: "calc(-50% + 45px + -90px)",
+        right: "calc(50% + 35px)"
     },
     circle: {
         backgroundColor: "#2A486F",
-        width: "24px",
-        height: "24px",
+        width: "48px",
+        height: "48px",
         border: "1px solid",
-        borderRadius: "24px",
-        lineHeight: "20px",
-        paddingLeft: "27%",
+        borderRadius: "48px",
+        lineHeight: "44px",
+        fontSize: 24,
+        paddingLeft: "34%",
         boxSizing: "border-box",
         "&--active": {
             color: "#072041",
@@ -54,12 +62,9 @@ const StepIcon = (props: { active: boolean, completed: boolean, icon: React.Reac
     const styles = useStyles();
 
     if (completed) {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <g fill="none" fill-rule="evenodd">
-                <g fill="#56A500">
-                    <path d="M12 0c6.6 0 12 5.4 12 12s-5.4 12-12 12S0 18.6 0 12 5.4 0 12 0zm0 1C5.9 1 1 5.9 1 12s4.9 11 11 11 11-4.9 11-11S18.1 1 12 1zm6.718 6.732c.195.195.195.512 0 .707l-7.779 7.779c-.173.173-.443.192-.638.057l-.069-.057-4.95-4.95c-.195-.195-.195-.512 0-.707.196-.196.512-.196.708 0l4.596 4.596 7.424-7.425c.196-.195.512-.195.708 0z" transform="translate(-700 -234) translate(646 174) translate(0 48) translate(4) translate(50 12)"/>
-                </g>
-            </g>
+        return <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#2a486f">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
         </svg>
     }
     else {
@@ -78,14 +83,19 @@ const Stepper: FC<StepeprProps> = (props: StepeprProps) => {
 
     return <MuiStepper
         {...props}
-        connector={<StepConnector classes={{lineHorizontal: classes.stepConnector}}/>}
+        connector={<StepConnector classes={{lineHorizontal: classes.stepConnector, alternativeLabel: classes.connectorLabel}}/>}
         classes={{ root: classes.stepperRoot }}
         activeStep={props.activeStep}
         alternativeLabel
     >
         {props.steps.map(({label}, index) => (
             <Step classes={{ alternativeLabel: classes.alternativeLabel }} key={label}>
-                <StepLabel StepIconComponent={StepIcon} classes={{ label: classes.label, root: classes.labelRoot, completed: classes.completed}}>{label}</StepLabel>
+                <StepLabel
+                    StepIconComponent={StepIcon}
+                    classes={{ label: classes.label, root: classes.labelRoot, completed: classes.completed}}
+                >
+                    {label}
+                </StepLabel>
             </Step>
         ))}
     </MuiStepper>

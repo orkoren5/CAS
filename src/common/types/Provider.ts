@@ -1,6 +1,12 @@
-import type {ReactElement} from "react";
-
 export interface Provider {
-    name: string;
-    logo: ReactElement;
+    provider: string,
+    mcc: number;
+    mnc: number;
+    btsCounter: {
+        gsm: number;
+        umts: number;
+        lte: number;
+        all: number;
+    },
+    ueNumber: number;
 }

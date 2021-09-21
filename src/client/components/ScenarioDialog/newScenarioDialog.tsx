@@ -12,7 +12,7 @@ const NewScenarioDialog = (props: NewScenarioDialogProps) => {
         open={props.open}
         onClose={props.onClose}
         fullWidth
-        maxWidth="sm"
+        maxWidth="md"
         PaperProps={{className: "scenario-dialog"}}
     >
         <ScenarioDialogContent onClose={props.onClose} />

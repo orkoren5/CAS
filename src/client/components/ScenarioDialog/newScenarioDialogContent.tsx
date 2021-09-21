@@ -6,13 +6,16 @@ import CloseIcon from "@material-ui/icons/Close";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button";
 import StepOne, {FileStatus} from "./stepOne";
-import StepTwo, {ProviderData, Target, StepTwoProps} from "./stepTwo";
+import StepTwo, {StepTwoProps} from "./stepTwo";
 import DialogContent from "@material-ui/core/DialogContent";
 import Stepper from "../common/stepper";
-import {Scenario} from "../../../common/types/Scenario";
-import type {NewScenarioDialogProps} from "./newScenarioDialog";
 import {makeStyles} from "@material-ui/core/styles";
 import fetch from "../../state/mockFetch";
+import {addScenario} from "../../state/thunkActionCreators";
+import type {Scenario} from "../../../common/types/Scenario";
+import type {Provider} from "../../../common/types/Provider";
+import type {NewScenarioDialogProps} from "./newScenarioDialog";
+import type {Target} from "../../../common/types/Target";
 
 interface ScenarioDialogContentProps {
     onClose: NewScenarioDialogProps["onClose"]
@@ -22,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
     titleRoot: {
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        fontSize: 22,
+        color: "#d7dee8",
+        padding: "11px 20px"
     },
     contentRoot: {
         padding: 0,
@@ -35,12 +41,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDialogContentProps) => {
-    const [activeStep, setActiveStep] = useState<number>(1);
+    const [activeStep, setActiveStep] = useState<number>(0);
     const [fileStatus, setFileStatus] = useState<FileStatus>(FileStatus.NOT_UPLOADED);
     const [fileName, setFileName] = useState<string>();
-    const [providerData, setProviderData] = useState<ProviderData[]>([]);
-    const [targets, setTargets] = useState<StepTwoProps["targets"]>([]);
-    const [scenario, setScenario] = useState<Partial<Scenario>>();
+    const [providers, setProviders] = useState<Provider[]>([]);
+    const [targets, setTargets] = useState<Target[]>([]);
+    const [scenario, setScenario] = useState<Partial<Scenario>>({});
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -63,6 +69,11 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
     };
 
     const createScenario = () => {
+        dispatch(addScenario({
+            ...scenario,
+            targets,
+            providers
+        }));
         props.onClose();
     };
 
@@ -78,7 +89,7 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
         const formData = new FormData();
         formData.append("csv", file || "");
 
-        const response = await fetch("/uploadCSV", {
+        const response = await fetch<Provider[]>("/uploadCSV", {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -86,7 +97,9 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
             body: formData
         });
 
-        setProviderData(response);
+        const providers = await response.json();
+
+        setProviders(providers);
         setFileStatus((currStatus) => {
             if (currStatus === FileStatus.UPLOADING) {
                 return FileStatus.UPLOADED;
@@ -96,8 +109,8 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
     }
 
     const handleAddTarget = () => {
-        const newTarget: Target & { key: string } = {
-            key: new Date().getTime().toString(),
+        const newTarget: Target = {
+            id: new Date().getTime().toString(),
             name: "",
             provider: "",
             imei: 0,
@@ -105,6 +118,23 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
         };
 
         setTargets([...targets, newTarget]);
+    }
+
+    const handleEditScenario = (scenario: Partial<Scenario>) => {
+        setScenario(scenario);
+    }
+
+    const handleDeleteTarget = (id: string) => {
+        const targetIndex = targets.findIndex(target => target.id === id);
+        const newTargets = [...targets.slice(0, targetIndex), ...targets.slice(targetIndex + 1)];
+        setTargets(newTargets);
+    }
+
+    const handleEditTarget = (target: Target) => {
+        const targetIndex = targets.findIndex(t => t.id === target.id);
+        const newTargets = [...targets];
+        newTargets[targetIndex] = target;
+        setTargets(newTargets);
     }
 
     return <>
@@ -120,6 +150,8 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
                 <StepOne
                     onFileSelected={handleFileSelected}
                     onRemoveFile={handleFileRemoved}
+                    onEditScenario={handleEditScenario}
+                    scenario={scenario}
                     fileStatus={fileStatus}
                     fileName={fileName as string}
                 />
@@ -127,8 +159,10 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
             { activeStep === 1 &&
                 <StepTwo
                     targets={targets}
-                    providerData={providerData}
+                    providers={providers}
                     addTarget={handleAddTarget}
+                    deleteTarget={handleDeleteTarget}
+                    editTarget={handleEditTarget}
                 />
             }
         </DialogContent>
