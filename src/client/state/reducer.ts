@@ -72,7 +72,7 @@ function reducer(state = initialState, action: AnyAction) {
                 }
             };
         case apiSuccess(DELETE_SCENARIO): {
-            const newScenarios = state.scenarios;
+            const newScenarios = { ...state.scenarios };
             delete newScenarios[action.payload];
             return {
                 ...state,

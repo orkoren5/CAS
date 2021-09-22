@@ -75,6 +75,7 @@ const TargetTable = (props: TargetTableProps) => {
                 { props.targets.length > 0 &&
                     <StyledFormControlLabel
                         label="Load to manipulation"
+                        color="textPrimary"
                         control={
                             <Checkbox disabled={!props.editable} color="default"/>
                         }

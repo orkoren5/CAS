@@ -11,24 +11,22 @@ export default createTheme({
             main: "#0A68EB"
         },
         action: {
-            hover: "#112033"
+            hover: "#112033",
         },
         text: {
             primary: "#d7dee8",
             disabled: "#d7dee8",
             secondary: "#acbccf"
         }
-        // divider: deepOrange[700],
-        // background: {
-        //     default: deepOrange[900],
-        //     paper: deepOrange[900],
-        // },
-        // text: {
-        //     primary: '#fff',
-        //     secondary: grey[500],
-        // },
     },
     overrides: {
+        MuiButton: {
+            contained: {
+                "&.Mui-disabled": {
+                    backgroundColor: "#1a5ab6"
+                }
+            }
+        },
         MuiDialog: {
             paperWidthMd: {
                 maxWidth: 870

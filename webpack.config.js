@@ -67,7 +67,17 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
+                exclude: [
+                    path.resolve(__dirname, "src/client/assets/images")
+                ],
                 use: ['@svgr/webpack'],
+            },
+            {
+                test: /\.svg$/,
+                include: [
+                    path.resolve(__dirname, "src/client/assets/images")
+                ],
+                loader: 'url-loader'
             }
         ]
     },

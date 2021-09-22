@@ -14,8 +14,11 @@ export interface TableProps {
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: "#172A42",
+    "&:hover": {
+        backgroundColor: "#0c68e9 !important",
+    },
     '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
+        backgroundColor: "#112033"
     },
     // hide last border
     '&:last-child td, &:last-child th': {

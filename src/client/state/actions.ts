@@ -1,4 +1,4 @@
-import {ADD_SCENARIO, apiRequest, apiSuccess, DELETE_SCENARIO} from "./consts";
+import {ADD_SCENARIO, apiRequest, apiSuccess, DELETE_SCENARIO, EDIT_SCENARIO} from "./consts";
 import {ActionCreator, AnyAction} from "redux";
 import {Scenario} from "../../common/types/Scenario";
 
@@ -12,11 +12,11 @@ export const addScenarioSuccess: ActionCreator<AnyAction> = (scenario: Scenario)
 });
 
 export const editScenarioRequest: ActionCreator<AnyAction> = () => ({
-    type: apiRequest(ADD_SCENARIO)
+    type: apiRequest(EDIT_SCENARIO)
 })
 
 export const editScenarioSuccess: ActionCreator<AnyAction> = (scenario: Scenario) => ({
-    type: apiSuccess(ADD_SCENARIO),
+    type: apiSuccess(EDIT_SCENARIO),
     payload: scenario
 });
 

@@ -4,8 +4,10 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
+        borderRadius: 3,
         "&:not(.Mui-disabled)": {
             backgroundColor: "#0D182C",
+            border: "1px solid #1d3450"
         },
         "&:before": {
             borderBottom: "none !important"

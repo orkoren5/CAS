@@ -10,6 +10,8 @@ import TargetTable from "./targetTable";
 import {useDispatch} from "react-redux";
 import {Provider} from "../../../common/types/Provider";
 import {Target} from "../../../common/types/Target";
+import {addScenario, deleteScenario, editScenario} from "../../state/thunkActionCreators";
+import Button from "@material-ui/core/Button";
 
 type ScenarioTextFieldProps = { scenario: Scenario, fieldName: keyof Scenario, editScenario: (scenario: Scenario) => void };
 const ScenarioTextField = (props: TextFieldProps & ScenarioTextFieldProps) => {
@@ -34,6 +36,16 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
     const setEditMode = (editMode: boolean) => setEditableScenario(editMode ? props.scenario : null);
     const scenario = editableScenario || props.scenario;
     const dispatch = useDispatch();
+
+    const handleSaveScenario = (asNew: boolean) => {
+        if (asNew) {
+            dispatch(addScenario(editableScenario));
+        }
+        else  {
+            dispatch(editScenario(editableScenario));
+        }
+        setEditMode(false);
+    }
 
     const handleEditProvider = (provider: Provider) => {
         const scenario = editableScenario as Scenario;
@@ -73,7 +85,7 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
     }
 
     const handleAddTarget = () => {
-        const newTarget: Target = { id: new Date().toString(), name: "", imei: 0, imsi: 0, provider: "" };
+        const newTarget: Target = { id: new Date().getTime().toString(), name: "", imei: 0, imsi: 0, provider: "" };
 
         setEditableScenario({
             ...scenario,
@@ -84,13 +96,22 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
         })
     }
 
+    const handleDeleteScenario = () => {
+        dispatch(deleteScenario(props.scenario.id));
+    }
+
+    const handleChangeTitle = (title: string) => {
+        setEditableScenario({...editableScenario as Scenario, name: title});
+    }
+
     return <div className="scenario-details">
         <ScenarioTitle
             title={scenario.name}
+            onChangeTitle={handleChangeTitle}
             editMode={editMode}
             onEdit={setEditMode}
-            onDelete={() => {}}
-            onSave={() => {}}
+            onDelete={handleDeleteScenario}
+            onSave={handleSaveScenario}
         />
         <div className="scenario-details-grid">
             <ScenarioTextField
@@ -159,6 +180,9 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
             deleteTarget={handleDeleteTarget}
             addTarget={handleAddTarget}
         />
+        <div className="run-scenario-bar">
+            <Button disabled={editMode} variant="contained" color="primary">Run scenario</Button>
+        </div>
     </div>
 }
 
