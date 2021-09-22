@@ -2,7 +2,7 @@ import {ProviderData} from "../components/ScenarioDialog/stepTwo";
 
 type MockFetchRes<T> = { json: () => Promise<T>, status: number };
 
-const wrapFetch = <T>(jsonResponse: T, timeout = 0): Promise<MockFetchRes<T>> => {
+const wrapFetch = <T extends any>(jsonResponse: T, timeout = 0): Promise<MockFetchRes<T>> => {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve({
@@ -51,6 +51,15 @@ const fetch = <T>(route: string, options: Record<string, any>): Promise<MockFetc
             const scenario = options.body;
             const now = new Date().toISOString();
             return wrapFetch({...scenario, id: now, creationDate: now, lastSaveDate: now}, 1000);
+        }
+        case "/editScenario": {
+            const scenario = options.body;
+            const now = new Date().toISOString();
+            return wrapFetch({...scenario, lastSaveDate: now}, 1000);
+        }
+        case "/deleteScenario": {
+            const scenario = options.body;
+            return wrapFetch("OK", 0);
         }
     }
     return new Promise(resolve => resolve(wrapFetch("")));

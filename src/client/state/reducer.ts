@@ -1,6 +1,6 @@
 import {AnyAction} from "redux";
 import {buildScenario, Scenario} from "../../common/types/Scenario";
-import {ADD_SCENARIO_REQUEST, ADD_SCENARIO_SUCCESS} from "./consts";
+import {ADD_SCENARIO, apiRequest, apiSuccess, DELETE_SCENARIO, EDIT_SCENARIO} from "./consts";
 
 export interface MainState {
     scenarios: Record<string, Scenario>
@@ -19,6 +19,7 @@ const initialState: MainState = {
             "creationDate": new Date(),
             "targets": [
                 {
+                    "id": "1",
                     "name": "ssfsd",
                     "provider": "78",
                     "imei": 7897,
@@ -57,17 +58,27 @@ const initialState: MainState = {
 
 function reducer(state = initialState, action: AnyAction) {
     switch (action.type) {
-        case ADD_SCENARIO_REQUEST:
+        case apiRequest(ADD_SCENARIO):
+        case apiRequest(EDIT_SCENARIO):
+        case apiRequest(DELETE_SCENARIO):
             return state;
-        case ADD_SCENARIO_SUCCESS:
-            const scenario = buildScenario(action.payload);
+        case apiSuccess(ADD_SCENARIO):
+        case apiSuccess(EDIT_SCENARIO):
             return {
                 ...state,
                 scenarios: {
                     ...state.scenarios,
-                    [action.payload.id]: scenario
+                    [action.payload.id]: action.payload
                 }
+            };
+        case apiSuccess(DELETE_SCENARIO): {
+            const newScenarios = state.scenarios;
+            delete newScenarios[action.payload];
+            return {
+                ...state,
+                scenarios: newScenarios
             }
+        }
         default:
             return state;
     }
