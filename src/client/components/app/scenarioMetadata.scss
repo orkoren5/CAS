@@ -1,0 +1,21 @@
+.scenario-metadata {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  .scenario-description {
+    grid-column: 1 / span 3;
+  }
+
+  .scenario-location {
+    display: grid;
+    gap: 5px;
+    align-items: center;
+    grid-template-columns: auto 1fr auto 1fr;
+    .scenario-location-title {
+      grid-column: 1 / span 4;
+      align-self: flex-start;
+      line-height: 16px;
+    }
+  }
+}

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const AppHeader = ({ title }: AppHeaderProps) => {
     const styles = useStyles();
     return <div className={styles.header}>
-        <Typography color="textPrimary" variant="h6">{title}</Typography>
+        <Typography color="textPrimary" variant="h5">{title}</Typography>
     </div>
 }
 

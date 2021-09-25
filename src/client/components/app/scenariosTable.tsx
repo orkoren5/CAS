@@ -32,6 +32,7 @@ const ScenariosTable = (props: ScenariosTableProps) => {
     const list = Object.values(props.scenarios);
     const [selected, setSelected] = useState<Scenario>(list[0]);
     const classes = useStyles();
+
     const dispatch = useDispatch();
 
     const handleDelete = (id: string) => {

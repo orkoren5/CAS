@@ -1,0 +1,22 @@
+.run-scenario {
+    width: 50%;
+    max-width: 800px;
+    background-color: #112033;
+    .run-scenario-title {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 25px;
+    }
+
+    .run-scenario-status {
+        display: flex;
+        gap: 3px
+    }
+
+    .run-scenario-details {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px
+    }
+}

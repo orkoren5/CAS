@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import '../App.css';
-import NewScenarioDialog from "./ScenarioDialog/newScenarioDialog";
-import AppHeader from "./common/appHeader";
-import NoScenarios from "./app/noScenarios";
+import NewScenarioDialog from "../components/ScenarioDialog/newScenarioDialog";
+import AppHeader from "../components/common/appHeader";
+import NoScenarios from "../components/app/noScenarios";
 import {useSelector} from "react-redux";
 import {getScenarios} from "../state/selectors";
-import ScenariosTable from "./app/scenariosTable";
+import ScenariosTable from "../components/app/scenariosTable";
 
 function Scenarios() {
     const [open, setOpen] = useState<boolean>(false);

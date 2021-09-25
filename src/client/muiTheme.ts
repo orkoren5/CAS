@@ -13,6 +13,12 @@ export default createTheme({
         action: {
             hover: "#112033",
         },
+        success: {
+            main: "#50e3c2"
+        },
+        error: {
+            main: "#ff6666"
+        },
         text: {
             primary: "#d7dee8",
             disabled: "#d7dee8",
@@ -76,6 +82,13 @@ export default createTheme({
         MuiTypography: {
             h6: {
                 fontSize: 26
+            },
+            h5: {
+                fontSize: 22,
+                lineHeight: "34px"
+            },
+            h4: {
+                fontSize: 28
             }
         }
     }

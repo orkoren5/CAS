@@ -11,11 +11,13 @@ app.use(bodyParser({limit: '50mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({limit: '50mb'}));
 
+app.use('/', express.static(path.join(__dirname, "../client")));
 app.use('/scenarios', express.static(path.join(__dirname, "../client")));
+app.use('/run/:id', express.static(path.join(__dirname, "../client")));
 
-app.use('/', (req, res) => {
-    res.redirect('/scenarios');
-});
+// app.use('/', (req, res) => {
+//     res.redirect('/scenarios');
+// });
 
 app.get('/', (req, res) => {
     console.log(__dirname);
