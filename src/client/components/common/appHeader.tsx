@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "rgba(11, 25, 42, 0.65)",
         padding: "10px 26px",
         position: "fixed",
+        display: "flex",
+        alignItems: "baseline",
+        gap: 20,
         top: 0,
         left: 0,
         right: 0,
@@ -21,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const AppHeader = ({ title }: AppHeaderProps) => {
     const styles = useStyles();
     return <div className={styles.header}>
+        <Typography color="textPrimary" variant="h4">CAS</Typography>
         <Typography color="textPrimary" variant="h5">{title}</Typography>
     </div>
 }

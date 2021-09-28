@@ -5,7 +5,11 @@
     .run-scenario-title {
         display: flex;
         justify-content: space-between;
-        padding: 15px 25px;
+        padding: 20px 25px;
+    }
+
+    .run-scenario-button {
+        width: 180px
     }
 
     .run-scenario-status {
@@ -19,4 +23,20 @@
         gap: 20px;
         padding: 30px
     }
+}
+
+.stations-container {
+    flex-grow: 1;
+    padding: 20px;
+    overflow: auto;
+
+    .stations-title {
+        margin-bottom: 15px;
+    }
+}
+
+.stations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px
 }

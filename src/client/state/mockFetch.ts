@@ -14,7 +14,8 @@ const wrapFetch = <T extends any>(jsonResponse: T, timeout = 0): Promise<MockFet
 }
 
 const fetch = <T>(route: string, options: Record<string, any>): Promise<MockFetchRes<T>> => {
-    switch (route) {
+    const urlParts = route.split("?");
+    switch (urlParts[0]) {
         case "/uploadCSV": {
             const csv = options.body.get("csv");
 
@@ -57,10 +58,9 @@ const fetch = <T>(route: string, options: Record<string, any>): Promise<MockFetc
             const now = new Date().toISOString();
             return wrapFetch({...scenario, lastSaveDate: now}, 1000);
         }
-        case "/deleteScenario": {
-            const scenario = options.body;
+        case "/deleteScenario":
+        case "/runScenario":
             return wrapFetch("OK", 0);
-        }
     }
     return new Promise(resolve => resolve(wrapFetch("")));
 }

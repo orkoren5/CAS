@@ -8,7 +8,8 @@ import {
     addScenarioSuccess,
     deleteScenarioRequest, deleteScenarioSuccess,
     editScenarioRequest,
-    editScenarioSuccess
+    editScenarioSuccess,
+    runScenario as runScenarioAction
 } from "./actions";
 
 type ThunkActionCreator = (...args: any) => ThunkAction<void, GlobalState, any, AnyAction>;
@@ -76,5 +77,18 @@ export const deleteScenario: ThunkActionCreator = (id: string) => async (dispatc
 
     if (response.status === 200 || response.status === 204) {
         dispatch(deleteScenarioSuccess(id));
+    }
+}
+
+export const runScenario: ThunkActionCreator = (scenarioId: string) => async (dispatch, getState) => {
+    const response = await fetch<Scenario>("/runScenario?id=" + scenarioId, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin'
+    });
+
+    if (response.status === 200 || response.status === 204) {
+        dispatch(runScenarioAction(scenarioId));
     }
 }

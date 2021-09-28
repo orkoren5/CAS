@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
         color: "#fafbfb",
         "&.running": {
             color: theme.palette.success.main
+        },
+        "&.stopped": {
+            color: theme.palette.error.main
         }
     },
     subtitle: {

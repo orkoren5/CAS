@@ -1,6 +1,9 @@
 import { createTheme } from "@material-ui/core/styles";
 
 export default createTheme({
+    typography: {
+        fontFamily: "Lato"
+    },
     palette: {
         // palette values for dark mode
         type: "dark",
@@ -27,11 +30,20 @@ export default createTheme({
     },
     overrides: {
         MuiButton: {
+            root: {
+              textTransform: "unset"
+            },
             contained: {
                 "&.Mui-disabled": {
                     backgroundColor: "#1a5ab6"
                 }
             }
+        },
+        //@ts-ignore
+        MuiToggleButton: {
+            root: {
+                textTransform: "unset"
+            },
         },
         MuiDialog: {
             paperWidthMd: {
@@ -80,8 +92,12 @@ export default createTheme({
             }
         },
         MuiTypography: {
+            body1: {
+                lineHeight: "unset"
+            },
             h6: {
-                fontSize: 26
+                fontSize: 26,
+                fontFamily: "Lato"
             },
             h5: {
                 fontSize: 22,

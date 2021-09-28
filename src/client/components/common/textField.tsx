@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     withLabel: {
-        marginTop: "32px !important"
+        marginTop: "22px !important"
     },
     labelShrink: {
         fontSize: 21

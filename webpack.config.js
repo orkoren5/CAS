@@ -2,6 +2,7 @@ const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: "./src/client/index.tsx",
@@ -14,6 +15,9 @@ module.exports = {
         libraryTarget: "umd"
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: path.join(__dirname, 'index.html'),
@@ -60,10 +64,23 @@ module.exports = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    "style-loader",
-                    "css-loader",
+                    MiniCssExtractPlugin.loader, //"style-loader",
+                    { loader: 'css-loader', options: { url: true }},
                     "sass-loader",
                 ],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf)$/,
+                type: "asset"
+                // use: [
+                //     {
+                //         loader: 'file-loader',
+                //         options: {
+                //             name: '[path][name].[ext]',
+                //             outputPath: 'fonts/'
+                //         },
+                //     }
+                // ]
             },
             {
                 test: /\.svg$/,
@@ -77,7 +94,7 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, "src/client/assets/images")
                 ],
-                loader: 'url-loader'
+                type: "asset/inline"
             }
         ]
     },

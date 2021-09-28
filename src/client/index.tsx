@@ -8,6 +8,8 @@ import {store} from "./store";
 import Scenarios from "./pages/Scenarios";
 import muiTheme from "./muiTheme";
 import RunScenario from "./pages/RunScenario";
+// import './assets/fonts/Lato/Lato-Regular.ttf';
+// import './assets/fonts/Lato/Lato-Black.ttf';
 
 ReactDOM.render(
     <Provider store={store}>

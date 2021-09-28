@@ -44,6 +44,9 @@ const useStyles = makeStyles(() => ({
     menu: {
         width: 157,
         backgroundColor: "#105ac1"
+    },
+    editableTitle: {
+        fontSize: 22
     }
 }));
 

@@ -9,8 +9,9 @@ import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import {makeStyles} from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {deleteScenario} from "../../state/thunkActionCreators";
+import {getScenarioById} from "../../state/selectors";
 
 interface ScenariosTableProps {
     scenarios: Record<string, Scenario>;
@@ -30,13 +31,14 @@ const useStyles = makeStyles(() => ({
 
 const ScenariosTable = (props: ScenariosTableProps) => {
     const list = Object.values(props.scenarios);
-    const [selected, setSelected] = useState<Scenario>(list[0]);
+    const [selected, setSelected] = useState<string>(list[0].id);
+    const scenario = useSelector(getScenarioById(selected));
     const classes = useStyles();
 
     const dispatch = useDispatch();
 
     const handleDelete = (id: string) => {
-        setSelected(list[0]);
+        setSelected(list[0].id);
         dispatch(deleteScenario(id));
     }
 
@@ -46,13 +48,13 @@ const ScenariosTable = (props: ScenariosTableProps) => {
         description: scenario.description,
         lastSaveDate: scenario.lastSaveDate.toDateString(),
         lastRunDate: scenario.lastRunDate?.toDateString() || "",
-        edit: <IconButton onClick={() => setSelected(scenario)} classes={{ root: classes.iconBtn }}><Edit/></IconButton>,
+        edit: <IconButton onClick={() => setSelected(scenario.id)} classes={{ root: classes.iconBtn }}><Edit/></IconButton>,
         delete: <IconButton onClick={() => handleDelete(scenario.id)}  classes={{ root: classes.iconBtn }}><Delete/></IconButton>
     }));
 
     return <>
         <div className="scenario-title-bar">
-            <Typography color="textPrimary" variant="h6">Scenarios ({ list.length })</Typography>
+            <Typography color="textPrimary" variant="h5">Scenarios ({ list.length })</Typography>
             <Button variant="contained" color="primary" onClick={props.onAddScenarioClick}>Add new scenario</Button>
         </div>
         <div className="tables-container">
@@ -63,7 +65,7 @@ const ScenariosTable = (props: ScenariosTableProps) => {
                     rows={scenarioRows}
                 />
             </div>
-            <ScenarioDetails scenario={selected}/>
+            <ScenarioDetails scenario={scenario}/>
         </div>
 
     </>
