@@ -16,14 +16,15 @@ const targetCols = ["name", "provider", "imei", "imsi", "delete"];
 const targetHeaders: TableProps["headers"] = [["Name", "Provider", "IMEI", "IMSI", ""]];
 
 const TargetTextField = (props: TextFieldProps & { target: Target, fieldName: keyof Target, editTarget: (target: Target) => void }) => {
+    const { target, fieldName, editTarget, ...textFieldProps } = props;
     return <TextField
         onBlur={(e) => {
-            const newTarget = { ...props.target, [props.fieldName]: e.target.value }
-            props.editTarget(newTarget);
+            const newTarget = { ...target, [fieldName]: e.target.value }
+            editTarget(newTarget);
         }}
         fullWidth
-        defaultValue={props.target[props.fieldName]}
-        {...props}
+        defaultValue={target[fieldName]}
+        {...textFieldProps}
     />;
 }
 

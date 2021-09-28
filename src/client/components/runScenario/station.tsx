@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        transition: "background-color 0.2s",
         "&.ok": {
             backgroundColor: theme.palette.success.main
         },

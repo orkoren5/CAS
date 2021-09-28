@@ -48,6 +48,9 @@ export default createTheme({
         MuiDialog: {
             paperWidthMd: {
                 maxWidth: 870
+            },
+            paperWidthSm: {
+                maxWidth: 486
             }
         },
         MuiDialogTitle: {
@@ -105,6 +108,18 @@ export default createTheme({
             },
             h4: {
                 fontSize: 28
+            }
+        },
+        MuiSwitch: {
+            thumb: {
+                height: 13,
+                width: 13
+            },
+            switchBase: {
+                top: 3,
+                "&.Mui-checked": {
+                    transform: "translateX(23px)"
+                }
             }
         }
     }

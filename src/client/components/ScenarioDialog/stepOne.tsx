@@ -25,14 +25,15 @@ interface StepOneProps {
 
 type ScenarioTextFieldProps = { scenario: Partial<Scenario>, fieldName: keyof Scenario, editScenario: StepOneProps["onEditScenario"] };
 const ScenarioTextField = (props: TextFieldProps & ScenarioTextFieldProps) => {
+    const { scenario, fieldName, editScenario, ...textFieldProps } = props;
     return <TextField
-        {...props}
+        {...textFieldProps}
         onBlur={(e) => {
-            const newScenario = { ...props.scenario, [props.fieldName]: e.target.value }
-            props.editScenario(newScenario);
+            const newScenario = { ...scenario, [fieldName]: e.target.value }
+            editScenario(newScenario);
         }}
         fullWidth
-        defaultValue={props.scenario[props.fieldName]}
+        defaultValue={scenario[fieldName]}
     />;
 }
 

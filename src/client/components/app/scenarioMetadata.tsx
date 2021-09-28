@@ -9,14 +9,15 @@ import {TextFieldProps} from "@material-ui/core";
 
 type ScenarioTextFieldProps = { scenario: Scenario, fieldName: keyof Scenario, editScenario: (scenario: Scenario) => void };
 const ScenarioTextField = (props: TextFieldProps & ScenarioTextFieldProps) => {
+    const { scenario, fieldName, editScenario, ...textFieldProps } = props;
     return <TextField
         onBlur={(e) => {
-            const newScenario = { ...props.scenario, [props.fieldName]: e.target.value }
-            props.editScenario(newScenario);
+            const newScenario = { ...scenario, [fieldName]: e.target.value }
+            editScenario(newScenario);
         }}
         fullWidth
-        defaultValue={props.scenario[props.fieldName]}
-        {...props}
+        defaultValue={scenario[fieldName]}
+        {...textFieldProps}
     />;
 }
 

@@ -13,7 +13,7 @@ function Scenarios() {
     const noScenarios = Object.keys(scenarios).length === 0;
     return (
         <div className="App">
-            <AppHeader title="Manipulation Subsystem Simulator- Trainer App"/>
+            <AppHeader title="CAS Manipulation Subsystem Simulator- Trainer App"/>
             { noScenarios &&
                 <NoScenarios onAddScenarioClick={() => setOpen(true)}/>
             }

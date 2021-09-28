@@ -13,8 +13,22 @@ import {
     STOP_SCENARIO
 } from "./consts";
 import {Station, SystemMode} from "../../common/types/Run";
+import {BTS} from "../../common/types/Provider";
 
 export interface MainState {
+    configuration: {
+        providers: {
+            [name: string]: {
+                title: string;
+                icon: any;
+                btsList: {
+                    gms: BTS[],
+                    umts: BTS[],
+                    lte: BTS[]
+                }
+            }
+        }
+    },
     scenarios: Record<string, Scenario>,
     runStatus: Record<string, {
         status: "running" | "stopped",
@@ -23,6 +37,9 @@ export interface MainState {
 }
 
 const initialState: MainState = {
+    configuration: {
+        providers: {}
+    },
     runStatus: {},
     scenarios: {
         "aaa": {

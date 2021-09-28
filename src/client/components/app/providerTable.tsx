@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import Table, {TableProps} from "../common/table";
-import {Provider} from "../../../common/types/Provider";
+import {Provider, Technology} from "../../../common/types/Provider";
 import TextField from "../common/textField";
 import Typography from "@material-ui/core/Typography";
 import {TextFieldProps} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import BTSListDialog from "./btsListDialog";
+import {useGetConfig} from "../../state/configuration/useGetConfig";
 
 const providerCols = ["network", "mcc", "mnc", "all", "gsm", "umts", "lte", "ues number"];
 const providerHeaders: TableProps["headers"] = [
@@ -15,18 +17,23 @@ const providerHeaders: TableProps["headers"] = [
 const useStyles = makeStyles((theme) => ({
     titleRoot: {
         marginBottom: 15
+    },
+    link: {
+        textDecoration: "underline",
+        cursor: "pointer"
     }
 }));
 
 const ProviderTextField = (props: TextFieldProps & { provider: Provider, fieldName: keyof Provider, editProvider: (provider: Provider) => void }) => {
+    const { provider, fieldName, editProvider, ...textFieldProps } = props;
     return <TextField
         onBlur={(e) => {
-            const newProvider = { ...props.provider, [props.fieldName]: e.target.value }
-            props.editProvider(newProvider);
+            const newProvider = { ...provider, [fieldName]: e.target.value }
+            editProvider(newProvider);
         }}
         fullWidth
-        defaultValue={props.provider[props.fieldName]}
-        {...props}
+        defaultValue={provider[fieldName]}
+        {...textFieldProps}
     />;
 }
 
@@ -37,22 +44,55 @@ interface ProviderTableProps {
 }
 
 const ProviderTable = (props: ProviderTableProps) => {
+    const classes = useStyles();
+
+    const providerConf = useGetConfig("providers") || {};
+    const [dialogData, setDialogData] = useState<{ provider?: string, technology?: Technology }>({});
+
     const providerRows: TableProps["rows"] = props.providers.map(data => ({
         key: data.provider,
-        network: <span>{data.provider}</span>,
+        network:  <Typography color="textSecondary" variant="body2">{providerConf[data.provider]?.title}</Typography>,
         mcc: <ProviderTextField disabled={!props.editable} fieldName="mcc" provider={data} editProvider={props.editProvider}/>,
         mnc: <ProviderTextField disabled={!props.editable} fieldName="mnc" provider={data} editProvider={props.editProvider}/>,
-        all: <span>{data.btsCounter.all}</span>,
-        gsm: <span>{data.btsCounter.gsm}</span>,
-        umts: <span>{data.btsCounter.umts}</span>,
-        lte: <span>{data.btsCounter.lte}</span>,
+        all: <Typography
+            color="textSecondary"
+            variant="body2"
+            classes={{root: classes.link}}
+            onClick={() => setDialogData({ provider: data.provider })}
+        >
+            {Object.values(providerConf[data.provider]?.btsList || []).reduce((sum, list) => sum + list.length, 0)}
+        </Typography>,
+        gsm: <Typography
+            color="textSecondary"
+            variant="body2"
+            classes={{root: classes.link}}
+            onClick={() => setDialogData({provider: data.provider, technology: "gsm"})}
+        >
+            {providerConf[data.provider]?.btsList.gsm.length || 0}
+        </Typography>,
+        umts: <Typography
+            color="textSecondary"
+            variant="body2"
+            classes={{root: classes.link}}
+            onClick={() => setDialogData({provider: data.provider, technology: "umts"})}
+        >
+            {providerConf[data.provider]?.btsList.umts.length || 0}
+        </Typography>,
+        lte: <Typography
+            color="textSecondary"
+            variant="body2"
+            classes={{root: classes.link}}
+            onClick={() => setDialogData({provider: data.provider, technology: "lte"})}
+        >
+            {providerConf[data.provider]?.btsList.lte.length || 0}
+        </Typography>,
         "ues number": <ProviderTextField disabled={!props.editable} fieldName="ueNumber" provider={data} editProvider={props.editProvider}/>,
     }));
 
-    const classes = useStyles();
     return <div>
         <Typography classes={{ root: classes.titleRoot }} variant="subtitle1" color="textPrimary">Providers ({props.providers.length})</Typography>
         <Table columns={providerCols} headers={providerHeaders} rows={providerRows}/>
+        <BTSListDialog onClose={() => setDialogData({})} open={!!dialogData.provider} provider={dialogData.provider || ""} technology={dialogData.technology}/>
     </div>
 }
 
