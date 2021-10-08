@@ -37,7 +37,7 @@ const Table = (props: TableProps) => {
                 props.headers.map((header, index) => (
                     <TableRow classes={{root: styles.tableRow}} key={"header-" + index}>
                         {header.map((headerCell, ind) => {
-                            const title = typeof headerCell === "string" ? headerCell : typeof headerCell.title === "string" ? headerCell.title : ind;
+                            const title = typeof headerCell === "string" ? headerCell : headerCell.title;
                             const colspan = typeof headerCell === "string" ? undefined : headerCell.colspan;
                             return <TableCell key={title + "-" + ind} colSpan={colspan}>{title}</TableCell>
                         })}

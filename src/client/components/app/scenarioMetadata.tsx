@@ -1,11 +1,11 @@
 import React from "react";
 import "./scenarioMetadata.scss";
-import {makeStyles} from "@material-ui/core/styles";
 import TextField from "../common/textField";
 import Typography from "@material-ui/core/Typography";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Scenario} from "../../../common/types/Scenario";
 import {TextFieldProps} from "@material-ui/core";
+import dateformat from "dateformat";
 
 type ScenarioTextFieldProps = { scenario: Scenario, fieldName: keyof Scenario, editScenario: (scenario: Scenario) => void };
 const ScenarioTextField = (props: TextFieldProps & ScenarioTextFieldProps) => {
@@ -40,19 +40,19 @@ const ScenarioMetadata = ({ editMode, scenario, setScenario }: ScenarioMetadataP
         <TextField
             label="Creation date"
             disabled
-            defaultValue={scenario.creationDate.toDateString()}
+            defaultValue={dateformat(scenario.creationDate, "dd.mm.yy hh:MM")}
         />
         <TextField
             label="Last save date"
             fullWidth
             disabled
-            defaultValue={scenario.lastSaveDate.toDateString()}
+            defaultValue={dateformat(scenario.lastSaveDate, "dd.mm.yy hh:MM")}
         />
         <TextField
             label="Last save date"
             fullWidth
             disabled
-            defaultValue={scenario.lastRunDate?.toDateString()}
+            defaultValue={scenario.lastRunDate ? dateformat(scenario.lastRunDate, "dd.mm.yy hh:MM") : ""}
         />
         <div className="scenario-location">
             <Typography className="scenario-location-title" color="textPrimary">Shelter Location</Typography>

@@ -1,7 +1,6 @@
 import React from 'react';
 import '../App.css';
 import './runScenario.scss';
-
 import AppHeader from "../components/common/appHeader";
 import {useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -32,6 +31,9 @@ function RunScenario() {
         runStatus.status === "running" ? dispatch(stopScenario(scenarioId)) : dispatch(runScenario(scenarioId));
     };
 
+    const startRunTime = scenario.lastRunDate?.toLocaleTimeString() || "";
+    const startRunDate = scenario.lastRunDate?.toLocaleDateString() || "";
+
     return (
         <div className="App">
             <AppHeader title="Manipulation Subsystem Simulator- Trainer App"/>
@@ -52,11 +54,11 @@ function RunScenario() {
                         <StatusTile title="Status" value={runStatus.status === "running" ? "Running" : "Stopped"} subtitle="" status={runStatus.status} icon={<StatusIcon/>}/>
                         <StatusTile
                             title="Start run time"
-                            value={scenario.lastRunDate?.toDateString() || ""}
-                            subtitle={scenario.lastRunDate?.toDateString() || ""}
+                            value={startRunTime}
+                            subtitle={startRunDate}
                             status="regular" icon={<StartTimeIcon/>}
                         />
-                        <StatusTile title="Duration" value="Running" subtitle="" status="regular" icon={<DurationIcon/>}/>
+                        <StatusTile title="Duration" value={scenario.lastRunDate || ""} subtitle="" status="regular" icon={<DurationIcon/>}/>
                     </div>
                     <div className="run-scenario-details">
                         <ScenarioMetadata editMode={false} scenario={scenario} setScenario={() => {}}/>

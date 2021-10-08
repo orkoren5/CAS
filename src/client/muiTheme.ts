@@ -1,5 +1,7 @@
 import { createTheme } from "@material-ui/core/styles";
 
+const colorMain = "#0A68EB";
+
 export default createTheme({
     typography: {
         fontFamily: "Lato"
@@ -11,7 +13,7 @@ export default createTheme({
             paper: "#0E305C"
         },
         primary: {
-            main: "#0A68EB"
+            main: colorMain
         },
         action: {
             hover: "#112033",
@@ -42,8 +44,21 @@ export default createTheme({
         //@ts-ignore
         MuiToggleButton: {
             root: {
-                textTransform: "unset"
+                textTransform: "unset",
+                color: colorMain,
+                border: "1px solid " + colorMain,
+                borderRadius: 0,
+                "&.Mui-selected": {
+                    backgroundColor: colorMain,
+                    color: "white",
+                    "&:hover": {
+                        backgroundColor: colorMain
+                    }
+                }
             },
+            sizeSmall: {
+                padding: "3px 7px"
+            }
         },
         MuiDialog: {
             paperWidthMd: {

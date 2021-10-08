@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 // import UploadIcon from "../../assets/icons/cloud-upload.svg";
 import Typography from "@material-ui/core/Typography";
+import dateformat from "dateformat";
 
 const useStyles = makeStyles((theme) => ({
     tile: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface StatusTileProps {
     title: string;
-    value: string;
+    value: string | Date;
     subtitle: string;
     status: "running" | "stopped" | "regular"
     icon: React.ReactElement;
@@ -46,13 +47,23 @@ interface StatusTileProps {
 
 const StatusTile = (props: StatusTileProps) => {
     const styles = useStyles();
+    const [displayValue, setDisplayValue] = useState<string>("");
 
+    useEffect(() => {
+        if (props.value instanceof Date) {
+            const interval = setInterval(() => {
+                const diff = Date.now() - (props.value as Date).getTime();
+                setDisplayValue(dateformat(diff, "hh:mm:ss"));
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [props.value]);
 
     return (
         <div className={styles.tile}>
             <div className={styles.icon}>{props.icon}</div>
             <Typography variant="subtitle1" color="textPrimary" classes={{ root: styles.title }}>{props.title}</Typography>
-            <Typography variant="h4" classes={{ root: styles.value + " " + props.status }}>{props.value}</Typography>
+            <Typography variant="h4" classes={{ root: styles.value + " " + props.status }}>{typeof props.value == "string" ? props.value : displayValue}</Typography>
             <Typography variant="subtitle1" color="textPrimary" classes={{ root: styles.subtitle }}>{props.subtitle}</Typography>
         </div>
     )

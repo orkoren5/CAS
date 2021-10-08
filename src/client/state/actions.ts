@@ -3,9 +3,13 @@ import {
     apiRequest,
     apiSuccess,
     CHANGE_BTS_STATUS,
-    CHANGE_PA_STATUS, CHANGE_SCANNER_STATUS, CHANGE_STATION_MODE,
+    CHANGE_PA_STATUS,
+    CHANGE_SCANNER_STATUS,
+    CHANGE_STATION_MODE,
     DELETE_SCENARIO,
-    EDIT_SCENARIO, RUN_SCENARIO, STOP_SCENARIO
+    EDIT_SCENARIO,
+    RUN_SCENARIO,
+    STOP_SCENARIO
 } from "./consts";
 import {ActionCreator, AnyAction} from "redux";
 import {Scenario} from "../../common/types/Scenario";

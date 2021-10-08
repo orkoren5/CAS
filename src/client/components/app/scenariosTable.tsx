@@ -12,6 +12,10 @@ import IconButton from "@material-ui/core/IconButton";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteScenario} from "../../state/thunkActionCreators";
 import {getScenarioById} from "../../state/selectors";
+//@ts-ignore
+import FilterEmpty from "../../assets/icons/filter-empty.svg"
+import FilterDialog from "./filterDialog";
+import dateformat from "dateformat";
 
 interface ScenariosTableProps {
     scenarios: Record<string, Scenario>;
@@ -19,7 +23,6 @@ interface ScenariosTableProps {
 }
 
 const scenarioTableColumns = ["name", "description", "lastSaveDate", "lastRunDate", "edit", "delete"];
-const scenarioTableHeaders = [["Scenario Name", "Description", "Last Save Date", "Last Run Date", "", ""]];
 
 const useStyles = makeStyles(() => ({
     iconBtn: {
@@ -32,8 +35,14 @@ const useStyles = makeStyles(() => ({
 const ScenariosTable = (props: ScenariosTableProps) => {
     const list = Object.values(props.scenarios);
     const [selected, setSelected] = useState<string>(list[0].id);
+    const [filterOpen, setFilterOpen] = useState<boolean>(false);
     const scenario = useSelector(getScenarioById(selected));
     const classes = useStyles();
+
+    const filterBtn = <IconButton classes={{root: classes.iconBtn}} onClick={() => setFilterOpen(true)}><FilterEmpty/></IconButton>;
+
+    const scenarioTableHeaders = [["Scenario Name", "Description", "Last Save Date", "Last Run Date", "", {title: filterBtn}]];
+
 
     const dispatch = useDispatch();
 
@@ -46,10 +55,10 @@ const ScenariosTable = (props: ScenariosTableProps) => {
         key: scenario.id,
         name: scenario.name,
         description: scenario.description,
-        lastSaveDate: scenario.lastSaveDate.toDateString(),
-        lastRunDate: scenario.lastRunDate?.toDateString() || "",
+        lastSaveDate: dateformat(scenario.lastSaveDate, "dd.mm.yy hh:MM"),
+        lastRunDate: scenario.lastRunDate ? dateformat(scenario.lastRunDate, "dd.mm.yy hh:MM") : "",
         edit: <IconButton onClick={() => setSelected(scenario.id)} classes={{ root: classes.iconBtn }}><Edit/></IconButton>,
-        delete: <IconButton onClick={() => handleDelete(scenario.id)}  classes={{ root: classes.iconBtn }}><Delete/></IconButton>
+        delete: <IconButton onClick={() => handleDelete(scenario.id)} classes={{ root: classes.iconBtn }}><Delete/></IconButton>
     }));
 
     return <>
@@ -67,7 +76,7 @@ const ScenariosTable = (props: ScenariosTableProps) => {
             </div>
             <ScenarioDetails scenario={scenario}/>
         </div>
-
+        <FilterDialog onClose={() => setFilterOpen(false)} open={filterOpen}/>
     </>
 }
 

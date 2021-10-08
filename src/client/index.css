@@ -49,3 +49,9 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+/*display: none;*/
+/*-webkit-appearance: none;*/
+  filter: invert(1);
+}
