@@ -10,6 +10,8 @@ export interface StepTwoProps {
     addTarget: () => void;
     deleteTarget: (id: string) => void;
     editTarget: (target: Target) => void;
+    loadToManipulation: boolean;
+    setLoadToManipulation: (value: boolean) => void;
 }
 
 const StepTwo: FC<StepTwoProps> = (props: StepTwoProps) => {
@@ -17,6 +19,8 @@ const StepTwo: FC<StepTwoProps> = (props: StepTwoProps) => {
         <ProviderTable editable providers={props.providers} editProvider={() => {}}/>
         <TargetTable
             editable
+            loadToManipulation={props.loadToManipulation}
+            setLoadToManipulation={props.setLoadToManipulation}
             targets={props.targets}
             editTarget={props.editTarget}
             deleteTarget={props.deleteTarget}

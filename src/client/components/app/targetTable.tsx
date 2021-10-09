@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Typography from "@material-ui/core/Typography";
 import {TextFieldProps} from "@material-ui/core";
+import Check from "@material-ui/icons/Check";
 
 const targetCols = ["name", "provider", "imei", "imsi", "delete"];
 const targetHeaders: TableProps["headers"] = [["Name", "Provider", "IMEI", "IMSI", ""]];
@@ -40,6 +41,11 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
     fontSize: "12px !important"
 }));
 
+const StyledCheck = styled(Check)(({ theme }) => ({
+    fontSize: 18,
+    marginRight: 10
+}));
+
 const StyledDiv = styled("div")(({ theme }) => ({
     display: "flex",
     justifyContent: "space-between",
@@ -54,6 +60,8 @@ const StyledDiv = styled("div")(({ theme }) => ({
 interface TargetTableProps {
     targets: Target[];
     editable: boolean;
+    loadToManipulation: boolean;
+    setLoadToManipulation: (value: boolean) => void;
     editTarget: (target: Target) => void;
     deleteTarget: (id: string) => void;
     addTarget: () => void;
@@ -78,7 +86,9 @@ const TargetTable = (props: TargetTableProps) => {
                         label="Load to manipulation"
                         color="textPrimary"
                         control={
-                            <Checkbox disabled={!props.editable} color="default"/>
+                            props.editable ?
+                                <Checkbox checked={props.loadToManipulation} disabled={!props.editable} onChange={(e) => props.setLoadToManipulation(e.target.checked)} color="default"/> :
+                                props.loadToManipulation ? <StyledCheck/> : <></>
                         }
                     />
                     }

@@ -1,7 +1,10 @@
 .run-scenario {
-    width: 50%;
+    min-width: 800px;
     max-width: 800px;
     background-color: #112033;
+    display: flex;
+    flex-direction: column;
+
     .run-scenario-title {
         display: flex;
         justify-content: space-between;
@@ -21,7 +24,10 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-        padding: 30px
+        padding: 30px;
+        flex-grow: 1;
+        height: 0;
+        overflow: auto;
     }
 }
 
@@ -35,8 +41,9 @@
     }
 }
 
-.stations-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px
+.stations-column {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 10px;
 }

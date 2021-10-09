@@ -52,6 +52,7 @@ const initialState: MainState = {
             "km": 11,
             "lastSaveDate": new Date(),
             "creationDate": new Date(),
+            "loadToManipulation": false,
             "targets": [
                 {
                     "id": "1",

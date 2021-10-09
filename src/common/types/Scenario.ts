@@ -11,8 +11,9 @@ export interface ScenarioJSON {
     creationDate: string;
     lastSaveDate: string;
     lastRunDate?: string;
-    providers: Provider[],
-    targets: Target[]
+    providers: Provider[];
+    targets: Target[];
+    loadToManipulation: boolean;
 }
 
 export interface Scenario {
@@ -26,7 +27,8 @@ export interface Scenario {
     lastSaveDate: Date;
     lastRunDate?: Date;
     providers: Provider[],
-    targets: Target[]
+    targets: Target[],
+    loadToManipulation: boolean;
 }
 
 export const buildScenario = (scenarioJSON: ScenarioJSON) : Scenario => {

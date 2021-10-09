@@ -74,7 +74,6 @@ const BTSListDialog = (props: BTSListDialogProps) => {
         onClose={props.onClose}
         fullWidth
         maxWidth="sm"
-        PaperProps={{className: "scenario-dialog"}}
     >
         <DialogTitle color="secondary" disableTypography classes={{root: classes.titleRoot}}>
             <Typography variant="h5" color="textPrimary">BTS List ({list.length})</Typography>

@@ -47,6 +47,7 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
     const [providers, setProviders] = useState<Provider[]>([]);
     const [targets, setTargets] = useState<Target[]>([]);
     const [scenario, setScenario] = useState<Partial<Scenario>>({});
+    const [loadToManipulation, setLoadToManipulation] = useState<boolean>(false);
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
     const createScenario = () => {
         dispatch(addScenario({
             ...scenario,
+            loadToManipulation,
             targets,
             providers
         }));
@@ -163,6 +165,8 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
                     addTarget={handleAddTarget}
                     deleteTarget={handleDeleteTarget}
                     editTarget={handleEditTarget}
+                    setLoadToManipulation={setLoadToManipulation}
+                    loadToManipulation={loadToManipulation}
                 />
             }
         </DialogContent>

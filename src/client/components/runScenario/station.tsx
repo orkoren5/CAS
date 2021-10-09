@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main,
         border: "1px solid " + theme.palette.primary.main,
         borderRadius: 0,
+        minWidth: 100,
         "&.Mui-selected": {
             backgroundColor: theme.palette.primary.main,
             color: "white",

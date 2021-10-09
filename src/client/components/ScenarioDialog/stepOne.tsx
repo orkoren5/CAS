@@ -89,7 +89,8 @@ const StepOne: FC<StepOneProps> = (props: StepOneProps) => {
         </div>
         <span className="scenario-dialog__title upload-title">Upload scan file</span>
         <Dropzone onFilesLoaded={handleFileSelected}/>
-        { props.fileStatus !== FileStatus.NOT_UPLOADED &&
+        { props.fileStatus === FileStatus.NOT_UPLOADED ?
+            <div className="progress-placeholder"/> :
             <>
                 <div className="progress-row">
                     <div className="progress-file-name">

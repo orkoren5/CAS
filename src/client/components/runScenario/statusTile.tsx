@@ -53,7 +53,7 @@ const StatusTile = (props: StatusTileProps) => {
         if (props.value instanceof Date) {
             const interval = setInterval(() => {
                 const diff = Date.now() - (props.value as Date).getTime();
-                setDisplayValue(dateformat(diff, "hh:mm:ss"));
+                setDisplayValue(dateformat(diff, "hh:mm:ss", false, false));
             }, 1000);
             return () => clearInterval(interval);
         }

@@ -1,4 +1,6 @@
 .scenario-dialog {
+    height: 950px;
+
     .scenario-dialog__title {
         font-size: 16px;
     }
@@ -30,9 +32,14 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: -20px;
+            height: 45px;
         }
         .progress-bar {
             background-color: #50E3C2;
+            height: 4px;
+        }
+        .progress-placeholder {
+            height: 54px;
         }
         .progress-file-name {
             display: flex;

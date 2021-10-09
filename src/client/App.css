@@ -1,8 +1,10 @@
 
 
 .App {
+  --app-padding: 26px;
+
   height: 100vh;
-  padding: 70px 26px 0 26px;
+  padding: 70px var(--app-padding) 0 var(--app-padding);
   overflow: auto;
   position: relative;
   display: flex;

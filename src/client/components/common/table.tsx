@@ -5,19 +5,24 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import {makeStyles} from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
+import cx from "classNames";
 
 export interface TableProps {
     headers: ({ title: string | React.ReactElement, colspan?: number } | string)[][],
     columns: string[],
-    rows: ({ key: string } & Record<string, React.ReactElement | string>)[]
+    rows: ({ key: string } & Record<string, React.ReactElement | string>)[],
+    hoverColor?: boolean;
 }
 
 const useStyles = makeStyles((theme) =>  ({
-    tableRow: {
-        backgroundColor: "#172A42",
+    tableRowHover: {
         "&:hover": {
             backgroundColor: "#0c68e9 !important",
         },
+    },
+    tableRow: {
+        backgroundColor: "#172A42",
+
         '&:nth-of-type(odd)': {
             backgroundColor: "#112033"
         },
@@ -48,7 +53,7 @@ const Table = (props: TableProps) => {
         <TableBody>
             {
                 props.rows.map(row => (
-                    <TableRow classes={{root: styles.tableRow}} key={row.key}>
+                    <TableRow classes={{root: cx(styles.tableRow, { [styles.tableRowHover]: props.hoverColor })}} key={row.key}>
                         {
                             props.columns.map((col) => (
                                 <TableCell key={row.key + "-" + col}>{row[col]}</TableCell>

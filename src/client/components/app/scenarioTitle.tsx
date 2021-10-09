@@ -64,7 +64,7 @@ const ScenarioTitle = (props: ScenarioTitleProps) => {
         <StyledIconButton onClick={props.onDelete}><Delete/></StyledIconButton>
         <Button variant="outlined" onClick={() => props.onEdit(!props.editMode)}>{props.editMode ? "Cancel" : "Edit"}</Button>
         { props.editMode && <div>
-                <StyledSaveButton onClick={() => props.onSave(false)} ref={btnRef} variant="contained" color="primary">
+                <StyledSaveButton onClick={() => setOpen(true)} ref={btnRef} variant="contained" color="primary">
                     Save
                 </StyledSaveButton>
                 <StyledArrowButton onClick={() => setOpen(true)} variant="contained" color="primary"><KeyboardArrowDown /></StyledArrowButton>

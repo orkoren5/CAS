@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 import './runScenario.scss';
 import AppHeader from "../components/common/appHeader";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import StatusTile from "../components/runScenario/statusTile";
@@ -19,20 +19,42 @@ import ProviderTable from "../components/app/providerTable";
 import TargetTable from "../components/app/targetTable";
 import Station from "../components/runScenario/station";
 import {changeBTSStatus, changePAStatus, changeScannerStatus, changeStationMode, stopScenario} from "../state/actions";
-import {runScenario} from "../state/thunkActionCreators";
+import dateformat from "dateformat";
+
+const NUM_COLS = 2;
 
 function RunScenario() {
     let { scenarioId } = useParams<{scenarioId: string}>();
     const scenario = useSelector(getScenarioById(scenarioId));
     const runStatus = useSelector(getRunStatus(scenarioId));
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const handleToggleRun = () => {
-        runStatus.status === "running" ? dispatch(stopScenario(scenarioId)) : dispatch(runScenario(scenarioId));
+    const handleEndRun = () => {
+        dispatch(stopScenario(scenarioId));
+        history.push("/scenarios/" + scenario.id);
     };
 
-    const startRunTime = scenario.lastRunDate?.toLocaleTimeString() || "";
-    const startRunDate = scenario.lastRunDate?.toLocaleDateString() || "";
+    const startRunTime = scenario.lastRunDate ? dateformat(scenario.lastRunDate, "hh:MM") : "";
+    const startRunDate = scenario.lastRunDate ? dateformat(scenario.lastRunDate, "dd.mm.yy") : "";
+
+    const createStationsCol = (colNum: number) => {
+        return <div className="stations-column">
+            {
+                runStatus.stations.filter((_, index) => index % NUM_COLS === colNum).map((station, index) => <Station
+                    title={"Station " + (index * NUM_COLS + colNum + 1)}
+                    systemMode={station.mode}
+                    btsStatuses={station.btsStatuses}
+                    paStatus={station.paStatuses}
+                    scanner={station.scannerStatuses[0]}
+                    onChangeBTSStatus={(ok: boolean, statusIndex: number) => dispatch(changeBTSStatus(scenarioId, index, statusIndex, ok))}
+                    onChangePAStatus={(ok: boolean, statusIndex: number) => dispatch(changePAStatus(scenarioId, index, statusIndex, ok))}
+                    onChangeScannerStatus={(ok: boolean) => dispatch(changeScannerStatus(scenarioId, index, ok))}
+                    onChangeMode={(systemMode => dispatch(changeStationMode(scenarioId, index, systemMode)))}
+                />)
+            }
+        </div>
+    }
 
     return (
         <div className="App">
@@ -45,9 +67,9 @@ function RunScenario() {
                             className="run-scenario-button"
                             variant="contained"
                             color="primary"
-                            onClick={handleToggleRun}
+                            onClick={handleEndRun}
                         >
-                            {runStatus.status === "running" ? "End run" : "Start run"}
+                            End Run
                         </Button>
                     </div>
                     <div className="run-scenario-status">
@@ -69,6 +91,8 @@ function RunScenario() {
                         />
                         <TargetTable
                             editable={false}
+                            loadToManipulation={scenario.loadToManipulation}
+                            setLoadToManipulation={() => {}}
                             targets={scenario.targets}
                             editTarget={() => {}}
                             deleteTarget={() => {}}
@@ -78,21 +102,8 @@ function RunScenario() {
                 </div>
                 <div className="stations-container">
                     <Typography className="stations-title" variant="h5" color="textPrimary">Stations</Typography>
-                    <div className="stations-grid">
-                        {
-                            runStatus.stations.map((station, index) => <Station
-                                title={"Station " + (index + 1)}
-                                systemMode={station.mode}
-                                btsStatuses={station.btsStatuses}
-                                paStatus={station.paStatuses}
-                                scanner={station.scannerStatuses[0]}
-                                onChangeBTSStatus={(ok: boolean, statusIndex: number) => dispatch(changeBTSStatus(scenarioId, index, statusIndex, ok))}
-                                onChangePAStatus={(ok: boolean, statusIndex: number) => dispatch(changePAStatus(scenarioId, index, statusIndex, ok))}
-                                onChangeScannerStatus={(ok: boolean) => dispatch(changeScannerStatus(scenarioId, index, ok))}
-                                onChangeMode={(systemMode => dispatch(changeStationMode(scenarioId, index, systemMode)))}
-                            />)
-                        }
-                    </div>
+                    {createStationsCol(0)}
+                    {createStationsCol(1)}
                 </div>
             </div>
         </div>

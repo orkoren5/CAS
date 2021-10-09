@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Scenario} from "../../../common/types/Scenario";
 import ScenarioTitle from "./scenarioTitle";
 import ProviderTable from "./providerTable";
@@ -13,15 +13,18 @@ import ScenarioMetadata from "./scenarioMetadata";
 
 interface ScenarioDetailsProps {
     scenario: Scenario;
+    editMode: boolean;
+    setEditMode: (mode: boolean) => void;
 }
 
 const ScenarioDetails = (props: ScenarioDetailsProps) => {
-    const [editableScenario, setEditableScenario] = useState<Scenario | null>(null);
-    const editMode = editableScenario !== null;
-    const setEditMode = (editMode: boolean) => setEditableScenario(editMode ? props.scenario : null);
-    const scenario = editableScenario || props.scenario;
+    const [editableScenario, setEditableScenario] = useState<Scenario>(props.scenario);
+    const scenario = props.editMode ? editableScenario : props.scenario;
     const dispatch = useDispatch();
-    const history = useHistory();
+
+    useEffect(() => {
+        setEditableScenario(props.scenario);
+    }, [props.editMode]);
 
     const handleSaveScenario = (asNew: boolean) => {
         if (asNew) {
@@ -30,7 +33,7 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
         else  {
             dispatch(editScenario(editableScenario));
         }
-        setEditMode(false);
+        props.setEditMode(false);
     }
 
     const handleEditProvider = (provider: Provider) => {
@@ -90,37 +93,35 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
         setEditableScenario({...editableScenario as Scenario, name: title});
     }
 
-    const handleRunScenario = () => {
-        history.push("/run/" + scenario.id);
+    const handleLoadToManipulation = (value: boolean) => {
+        setEditableScenario({...editableScenario as Scenario, loadToManipulation: value});
     }
-
     return <div className="scenario-details">
         <ScenarioTitle
             title={scenario.name}
             onChangeTitle={handleChangeTitle}
-            editMode={editMode}
-            onEdit={setEditMode}
+            editMode={props.editMode}
+            onEdit={props.setEditMode}
             onDelete={handleDeleteScenario}
             onSave={handleSaveScenario}
         />
-        <ScenarioMetadata editMode={editMode} scenario={scenario} setScenario={setEditableScenario}/>
+        <ScenarioMetadata editMode={props.editMode} scenario={scenario} setScenario={setEditableScenario}/>
         <ProviderTable
-            key={"provider-" + editMode.toString()}
-            editable={editMode}
+            key={"provider-" + props.editMode.toString()}
+            editable={props.editMode}
             providers={scenario.providers}
             editProvider={handleEditProvider}
         />
         <TargetTable
-            key={"target-" + editMode.toString()}
-            editable={editMode}
+            key={"target-" + props.editMode.toString()}
+            loadToManipulation={scenario.loadToManipulation}
+            setLoadToManipulation={handleLoadToManipulation}
+            editable={props.editMode}
             targets={scenario.targets}
             editTarget={handleEditTarget}
             deleteTarget={handleDeleteTarget}
             addTarget={handleAddTarget}
         />
-        <div className="run-scenario-bar">
-            <Button onClick={handleRunScenario} disabled={editMode} variant="contained" color="primary">Run scenario</Button>
-        </div>
     </div>
 }
 
