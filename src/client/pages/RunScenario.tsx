@@ -39,21 +39,23 @@ function RunScenario() {
     const startRunDate = scenario.lastRunDate ? dateformat(scenario.lastRunDate, "dd.mm.yy") : "";
 
     const createStationsCol = (colNum: number) => {
-        return <div className="stations-column">
-            {
-                runStatus.stations.filter((_, index) => index % NUM_COLS === colNum).map((station, index) => <Station
-                    title={"Station " + (index * NUM_COLS + colNum + 1)}
-                    systemMode={station.mode}
-                    btsStatuses={station.btsStatuses}
-                    paStatus={station.paStatuses}
-                    scanner={station.scannerStatuses[0]}
-                    onChangeBTSStatus={(ok: boolean, statusIndex: number) => dispatch(changeBTSStatus(scenarioId, index, statusIndex, ok))}
-                    onChangePAStatus={(ok: boolean, statusIndex: number) => dispatch(changePAStatus(scenarioId, index, statusIndex, ok))}
-                    onChangeScannerStatus={(ok: boolean) => dispatch(changeScannerStatus(scenarioId, index, ok))}
-                    onChangeMode={(systemMode => dispatch(changeStationMode(scenarioId, index, systemMode)))}
-                />)
-            }
-        </div>
+        const stations = [];
+        for (let index = colNum; index < runStatus.stations.length; index += NUM_COLS) {
+            const station = runStatus.stations[index];
+            stations.push(<Station
+                key={index}
+                title={"Station " + (index + 1)}
+                systemMode={station.mode}
+                btsStatuses={station.btsStatuses}
+                paStatus={station.paStatuses}
+                scanner={station.scannerStatuses[0]}
+                onChangeBTSStatus={(ok: boolean, statusIndex: number) => dispatch(changeBTSStatus(scenarioId, index, statusIndex, ok))}
+                onChangePAStatus={(ok: boolean, statusIndex: number) => dispatch(changePAStatus(scenarioId, index, statusIndex, ok))}
+                onChangeScannerStatus={(ok: boolean) => dispatch(changeScannerStatus(scenarioId, index, ok))}
+                onChangeMode={(systemMode => dispatch(changeStationMode(scenarioId, index, systemMode)))}
+            />)
+        }
+        return <div className="stations-column">{stations}</div>
     }
 
     return (

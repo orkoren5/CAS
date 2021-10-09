@@ -18,7 +18,7 @@ function Scenarios() {
                 <NoScenarios onAddScenarioClick={() => setOpen(true)}/>
             }
             { !noScenarios &&
-                <ScenariosTable onAddScenarioClick={() => setOpen(true)} scenarios={scenarios}/>
+                <ScenariosTable onAddScenarioClick={() => setOpen(true)}/>
             }
             <NewScenarioDialog onClose={() => setOpen(false)} open={open}/>
         </div>

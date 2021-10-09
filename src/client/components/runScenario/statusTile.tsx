@@ -3,6 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 // import UploadIcon from "../../assets/icons/cloud-upload.svg";
 import Typography from "@material-ui/core/Typography";
 import dateformat from "dateformat";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
     tile: {
@@ -10,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         height: 130,
         flexGrow: 1,
+        width: 0,
         backgroundColor: "#0e305c",
         padding: "30px 0 0 85px",
         position: "relative",
@@ -45,15 +47,22 @@ interface StatusTileProps {
     icon: React.ReactElement;
 }
 
+const getTimer = (fromDate: Date): string => {
+    const duration = moment.duration(Date.now() - fromDate.getTime(), 'milliseconds');
+    // const diff = Date.now() - (props.value as Date).getTime();
+    const min = duration.minutes() > 10 ? duration.minutes() : "0" + duration.minutes();
+    const sec = duration.seconds() > 10 ? duration.seconds() : "0" + duration.seconds();
+    return duration.hours() + ":" + min + ":" + sec;
+}
+
 const StatusTile = (props: StatusTileProps) => {
     const styles = useStyles();
-    const [displayValue, setDisplayValue] = useState<string>("");
+    const [displayValue, setDisplayValue] = useState<string>(props.value instanceof Date ? getTimer(props.value) : "");
 
     useEffect(() => {
         if (props.value instanceof Date) {
             const interval = setInterval(() => {
-                const diff = Date.now() - (props.value as Date).getTime();
-                setDisplayValue(dateformat(diff, "hh:mm:ss", false, false));
+                setDisplayValue(getTimer(props.value as Date));
             }, 1000);
             return () => clearInterval(interval);
         }

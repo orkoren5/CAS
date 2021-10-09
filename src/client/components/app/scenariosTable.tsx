@@ -11,7 +11,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteScenario, runScenario} from "../../state/thunkActionCreators";
-import {getScenarioById, getScenarios} from "../../state/selectors";
+import {getFilteredScenarios, getScenarioById, getScenarios} from "../../state/selectors";
 //@ts-ignore
 import FilterEmpty from "../../assets/icons/filter-empty.svg"
 import FilterDialog from "./filterDialog";
@@ -19,7 +19,6 @@ import dateformat from "dateformat";
 import {useHistory} from "react-router-dom";
 
 interface ScenariosTableProps {
-    scenarios: Record<string, Scenario>;
     onAddScenarioClick: () => void;
 }
 
@@ -34,13 +33,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ScenariosTable = (props: ScenariosTableProps) => {
-    const list = Object.values(props.scenarios);
-    const [selected, setSelected] = useState<string>(list[0].id);
+    const scenarios = useSelector(getFilteredScenarios);
+    const [selected, setSelected] = useState<string>(scenarios[0]?.id);
     const [filterOpen, setFilterOpen] = useState<boolean>(false);
     const [editMode, setEditMode] = useState<boolean>(false);
 
-    const allScenarios = useSelector(getScenarios);
-    const scenario = useSelector(getScenarioById(selected)) || Object.values(allScenarios)[0];
+    const scenario = useSelector(getScenarioById(selected)) || scenarios[0] || null;
     const classes = useStyles();
 
     const filterBtn = <IconButton classes={{root: classes.iconBtn}} onClick={() => setFilterOpen(true)}><FilterEmpty/></IconButton>;
@@ -59,7 +57,7 @@ const ScenariosTable = (props: ScenariosTableProps) => {
         history.push("/run/" + scenario.id);
     }
 
-    const scenarioRows = list.map(scenario => ({
+    const scenarioRows = scenarios.map(scenario => ({
         key: scenario.id,
         name: scenario.name,
         description: scenario.description,
@@ -71,7 +69,7 @@ const ScenariosTable = (props: ScenariosTableProps) => {
 
     return <>
         <div className="scenario-title-bar">
-            <Typography color="textPrimary" variant="h5">Scenarios ({ list.length })</Typography>
+            <Typography color="textPrimary" variant="h5">Scenarios ({ scenarios.length })</Typography>
             <Button variant="contained" color="primary" onClick={props.onAddScenarioClick} disabled={editMode}>Add new scenario</Button>
         </div>
         <div className="tables-container">
@@ -83,9 +81,9 @@ const ScenariosTable = (props: ScenariosTableProps) => {
                     hoverColor={true}
                 />
             </div>
-            <ScenarioDetails scenario={scenario} editMode={editMode} setEditMode={setEditMode}/>
+            { scenario && <ScenarioDetails scenario={scenario} editMode={editMode} setEditMode={setEditMode}/>}
             <div className="run-scenario-bar">
-                <Button onClick={handleRunScenario} disabled={editMode} variant="contained" color="primary">Run scenario</Button>
+                <Button onClick={handleRunScenario} disabled={editMode || !scenario} variant="contained" color="primary">Run scenario</Button>
             </div>
         </div>
         <FilterDialog onClose={() => setFilterOpen(false)} open={filterOpen}/>
