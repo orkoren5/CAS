@@ -99,7 +99,10 @@ export default createTheme({
             root: {
                 fontSize: "14px",
                 lineHeight: "30px",
-                borderBottom: 0
+                borderBottom: 0,
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                overflow: "hidden"
             }
         },
         MuiStepLabel: {
@@ -123,6 +126,15 @@ export default createTheme({
             },
             h4: {
                 fontSize: 28
+            }
+        },
+        MuiTooltip: {
+            tooltip: {
+                backgroundColor: "#0f111b",
+                padding: "14px 20px"
+            },
+            arrow: {
+                color: "#0f111b"
             }
         },
         MuiSwitch: {

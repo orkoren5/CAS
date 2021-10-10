@@ -105,7 +105,7 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
             onDelete={handleDeleteScenario}
             onSave={handleSaveScenario}
         />
-        <ScenarioMetadata editMode={props.editMode} scenario={scenario} setScenario={setEditableScenario}/>
+        <ScenarioMetadata key={props.editMode.toString()} editMode={props.editMode} scenario={scenario} setScenario={setEditableScenario}/>
         <ProviderTable
             key={"provider-" + props.editMode.toString()}
             editable={props.editMode}

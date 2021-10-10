@@ -1,5 +1,5 @@
 import {AnyAction} from "redux";
-import {Scenario} from "../../common/types/Scenario";
+import {buildScenario, Scenario} from "../../common/types/Scenario";
 import {
     ADD_SCENARIO,
     apiRequest,
@@ -131,7 +131,7 @@ function reducer(state = initialState, action: AnyAction) {
                 ...state,
                 scenarios: {
                     ...state.scenarios,
-                    [action.payload.id]: action.payload
+                    [action.payload.id]: buildScenario(action.payload)
                 }
             };
         case apiSuccess(DELETE_SCENARIO): {

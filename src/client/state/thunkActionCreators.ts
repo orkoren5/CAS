@@ -60,8 +60,9 @@ export const editScenario: ThunkActionCreator = (scenario: Scenario) => async (d
         body: scenario
     });
 
+    const editedScenario = await response.json();
     if (response.status === 200 || response.status === 204) {
-        dispatch(editScenarioSuccess(scenario));
+        dispatch(editScenarioSuccess(editedScenario));
     }
 }
 

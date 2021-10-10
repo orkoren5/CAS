@@ -71,14 +71,17 @@ const ScenarioMetadata = ({ editMode, scenario, setScenario }: ScenarioMetadataP
                 fieldName="long"
             />
         </div>
-        <TextField
+        <ScenarioTextField
             label="Shelter Radius"
+            scenario={scenario}
+            editScenario={setScenario}
+            fieldName="km"
             fullWidth
             disabled={!editMode}
             InputProps={{
                 endAdornment: editMode ? <InputAdornment position="end">km</InputAdornment>: undefined
             }}
-            value={editMode ? scenario.km : scenario.km + "km"}
+            defaultValue={editMode ? scenario.km : scenario.km + "km"}
         />
     </div>
 }

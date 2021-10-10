@@ -14,7 +14,7 @@ export interface TableProps {
     hoverColor?: boolean;
 }
 
-const useStyles = makeStyles((theme) =>  ({
+export const useTableStyles = makeStyles((theme) =>  ({
     tableRowHover: {
         "&:hover": {
             backgroundColor: "#0c68e9 !important",
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) =>  ({
 }));
 
 const Table = (props: TableProps) => {
-    const styles = useStyles();
+    const styles = useTableStyles();
 
     return <MuiTable stickyHeader size="small">
         <TableHead>
