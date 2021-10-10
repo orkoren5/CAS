@@ -5,6 +5,9 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
         borderRadius: 3,
+        "&.Mui-disabled": {
+            border: "1px solid transparent"
+        },
         "&:not(.Mui-disabled)": {
             backgroundColor: "#0D182C",
             border: "1px solid #1d3450"
@@ -14,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     inputInput: {
-        padding: "6px 0 7px 8px",
+        padding: "6px 0 7px 9px",
         fontSize: 14,
         lineHeight: "27px",
         height: "unset",

@@ -51,6 +51,7 @@ const StyledDiv = styled("div")(({ theme }) => ({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 10,
+    minHeight: 42,
     "&.no-targets": {
         flexDirection: "column",
         alignItems: "flex-start",
