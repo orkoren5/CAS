@@ -67,24 +67,24 @@ const initialState: MainState = {
                     "provider": "partner",
                     "mcc": 425,
                     "mnc": 1,
-                    "btsCounter": {
-                        "all": 50,
-                        "gsm": 25,
-                        "umts": 12,
-                        "lte": 13
-                    },
                     "ueNumber": 1344
                 },
                 {
                     "provider": "cellcom",
                     "mcc": 425,
                     "mnc": 2,
-                    "btsCounter": {
-                        "all": 28,
-                        "gsm": 14,
-                        "umts": 14,
-                        "lte": 0
-                    },
+                    "ueNumber": 567
+                },
+                {
+                    "provider": "suny",
+                    "mcc": 425,
+                    "mnc": 2,
+                    "ueNumber": 567
+                },
+                {
+                    "provider": "hot-mobile",
+                    "mcc": 425,
+                    "mnc": 2,
                     "ueNumber": 567
                 }
             ]

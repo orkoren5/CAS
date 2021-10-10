@@ -1,7 +1,7 @@
 {
   "partner": {
     "title": "Partner",
-    "icon": "",
+    "icon": "partner-logo.svg",
     "btsList": {
         "gsm": [
           {
@@ -84,6 +84,33 @@
           "channel": 7
         }
       ]
+    }
+  },
+  "cellcom": {
+    "title": "Cellcom",
+    "icon": "cellcom-logo.svg",
+    "btsList": {
+      "gsm": [],
+      "umts": [],
+      "lte": []
+    }
+  },
+  "hot-mobile": {
+    "title": "Hot Mobile",
+    "icon": "hot-mobile-logo.svg",
+    "btsList": {
+      "gsm": [],
+      "umts": [],
+      "lte": []
+    }
+  },
+  "suny": {
+    "title": "Suny",
+    "icon": "sunny-logo.svg",
+    "btsList": {
+      "gsm": [],
+      "umts": [],
+      "lte": []
     }
   }
 }

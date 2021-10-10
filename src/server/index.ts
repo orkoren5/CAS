@@ -15,6 +15,7 @@ app.use('/', express.static(path.join(__dirname, "../client")));
 app.use('/scenarios', express.static(path.join(__dirname, "../client")));
 app.use('/run/:id', express.static(path.join(__dirname, "../client")));
 app.use('/configuration', express.static(path.join(__dirname, "../common/conf")));
+app.use('/assets', express.static(path.join(__dirname, "../client/assets/dynamic")));
 
 // app.use('/', (req, res) => {
 //     res.redirect('/scenarios');

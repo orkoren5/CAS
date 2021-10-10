@@ -19,12 +19,12 @@ const targetHeaders: TableProps["headers"] = [["Name", "Provider", "IMEI", "IMSI
 const TargetTextField = (props: TextFieldProps & { target: Target, fieldName: keyof Target, editTarget: (target: Target) => void }) => {
     const { target, fieldName, editTarget, ...textFieldProps } = props;
     return <TextField
-        onBlur={(e) => {
+        onChange={(e) => {
             const newTarget = { ...target, [fieldName]: e.target.value }
             editTarget(newTarget);
         }}
         fullWidth
-        defaultValue={target[fieldName]}
+        value={target[fieldName]}
         {...textFieldProps}
     />;
 }
@@ -54,6 +54,7 @@ const StyledDiv = styled("div")(({ theme }) => ({
     "&.no-targets": {
         flexDirection: "column",
         alignItems: "flex-start",
+        gap: 10
     }
 }));
 

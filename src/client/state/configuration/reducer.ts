@@ -6,7 +6,7 @@ export interface ConfState {
     providers: null | {
         [name: string]: {
             title: string;
-            icon: any;
+            icon: string;
             btsList: {
                 gsm: BTS[],
                 umts: BTS[],

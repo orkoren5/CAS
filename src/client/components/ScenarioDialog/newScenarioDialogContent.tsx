@@ -1,21 +1,20 @@
 import React, {FC, useState} from "react";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import {useDispatch} from 'react-redux';
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button";
 import StepOne, {FileStatus} from "./stepOne";
-import StepTwo, {StepTwoProps} from "./stepTwo";
+import StepTwo from "./stepTwo";
 import DialogContent from "@material-ui/core/DialogContent";
 import Stepper from "../common/stepper";
 import {makeStyles} from "@material-ui/core/styles";
 import fetch from "../../state/mockFetch";
 import {addScenario} from "../../state/thunkActionCreators";
 import type {Scenario} from "../../../common/types/Scenario";
-import type {Provider} from "../../../common/types/Provider";
+import type {Provider, Technology} from "../../../common/types/Provider";
 import type {NewScenarioDialogProps} from "./newScenarioDialog";
 import type {Target} from "../../../common/types/Target";
+import DialogTitle from "../common/dialogTitle";
+import BtsListDialogContent from "../app/btsListDialogContent";
 
 interface ScenarioDialogContentProps {
     onClose: NewScenarioDialogProps["onClose"]
@@ -26,8 +25,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        fontSize: 22,
-        color: "#d7dee8",
         padding: "11px 20px"
     },
     contentRoot: {
@@ -36,12 +33,16 @@ const useStyles = makeStyles((theme) => ({
     actionsRoot: {
         backgroundColor: "#041127",
         flexDirection: "row-reverse",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+    },
+    actionBtn: {
+        minWidth: 180
     }
 }));
 
 const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDialogContentProps) => {
     const [activeStep, setActiveStep] = useState<number>(0);
+    const [showBtsList, setShowBtsList] = useState<{ provider: string, technology?: Technology } | null>(null);
     const [fileStatus, setFileStatus] = useState<FileStatus>(FileStatus.NOT_UPLOADED);
     const [fileName, setFileName] = useState<string>();
     const [providers, setProviders] = useState<Provider[]>([]);
@@ -139,16 +140,30 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
         setTargets(newTargets);
     }
 
-    return <>
-        <DialogTitle color="secondary" classes={{root: classes.titleRoot}} disableTypography>
-            <span>Add New Scenario</span>
-            <IconButton onClick={props.onClose}>
-                <CloseIcon />
-            </IconButton>
-        </DialogTitle>
-        <DialogContent classes={{root: classes.contentRoot}}>
-            <Stepper activeStep={activeStep} steps={steps}/>
-            { activeStep === 0 &&
+    const handleEditProvider = (provider: Provider) => {
+        const providerIndex = providers.findIndex(p => p.provider === provider.provider);
+        const newProvider = [...providers];
+        newProvider[providerIndex] = provider;
+        setProviders(newProvider);
+    }
+
+    if (showBtsList) {
+        return <>
+            <BtsListDialogContent provider={showBtsList.provider} technology={showBtsList.technology} onClose={props.onClose}/>
+            <DialogActions classes={{ root: classes.actionsRoot }} color="primary">
+                <div/>
+                <Button classes={{ root: classes.actionBtn}} variant="outlined" onClick={() => setShowBtsList(null)}>
+                    Back
+                </Button>
+            </DialogActions>
+        </>
+    }
+    else {
+        return <>
+            <DialogTitle title="Add New Scenario" onClose={props.onClose}/>
+            <DialogContent classes={{root: classes.contentRoot}}>
+                <Stepper activeStep={activeStep} steps={steps}/>
+                {activeStep === 0 &&
                 <StepOne
                     onFileSelected={handleFileSelected}
                     onRemoveFile={handleFileRemoved}
@@ -157,30 +172,33 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
                     fileStatus={fileStatus}
                     fileName={fileName as string}
                 />
-            }
-            { activeStep === 1 &&
+                }
+                {activeStep === 1 &&
                 <StepTwo
                     targets={targets}
                     providers={providers}
                     addTarget={handleAddTarget}
                     deleteTarget={handleDeleteTarget}
                     editTarget={handleEditTarget}
+                    editProvider={handleEditProvider}
                     setLoadToManipulation={setLoadToManipulation}
                     loadToManipulation={loadToManipulation}
+                    showBtsList={(provider, technology) => setShowBtsList({provider, technology})}
                 />
-            }
-        </DialogContent>
-        <DialogActions classes={{ root: classes.actionsRoot }} color="primary">
-            <Button disabled={fileStatus !== FileStatus.UPLOADED} variant="contained" color="primary" onClick={handlePositiveClick}>
-                { activeStep === 1 ? "Generate Scenario" : "Next" }
-            </Button>
-            { activeStep > 0 &&
-                <Button variant="outlined" onClick={handleBack}>
+                }
+            </DialogContent>
+            <DialogActions classes={{ root: classes.actionsRoot }} color="primary">
+                <Button disabled={fileStatus !== FileStatus.UPLOADED} classes={{ root: classes.actionBtn}} variant="contained" color="primary" onClick={handlePositiveClick}>
+                    { activeStep === 1 ? "Generate Scenario" : "Next" }
+                </Button>
+                { activeStep > 0 &&
+                <Button classes={{ root: classes.actionBtn}} variant="outlined" onClick={handleBack}>
                     Back
                 </Button>
-            }
-        </DialogActions>
-    </>
+                }
+            </DialogActions>
+        </>
+    }
 };
 
 export default ScenarioDialogContent;

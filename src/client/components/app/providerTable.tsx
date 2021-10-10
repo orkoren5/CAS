@@ -7,6 +7,7 @@ import {TextFieldProps} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import BTSListDialog from "./btsListDialog";
 import {useGetConfig} from "../../state/configuration/useGetConfig";
+import DynamicIcon from "../common/dynamicIcon";
 
 const providerCols = ["network", "mcc", "mnc", "all", "gsm", "umts", "lte", "ues number"];
 const providerHeaders: TableProps["headers"] = [
@@ -21,18 +22,23 @@ const useStyles = makeStyles((theme) => ({
     link: {
         textDecoration: "underline",
         cursor: "pointer"
+    },
+    network: {
+        display: "flex",
+        alignItems: "center",
+        gap: 16
     }
 }));
 
 const ProviderTextField = (props: TextFieldProps & { provider: Provider, fieldName: keyof Provider, editProvider: (provider: Provider) => void }) => {
     const { provider, fieldName, editProvider, ...textFieldProps } = props;
     return <TextField
-        onBlur={(e) => {
+        onChange={(e) => {
             const newProvider = { ...provider, [fieldName]: e.target.value }
             editProvider(newProvider);
         }}
         fullWidth
-        defaultValue={provider[fieldName]}
+        value={provider[fieldName]}
         {...textFieldProps}
     />;
 }
@@ -41,6 +47,7 @@ interface ProviderTableProps {
     editable: boolean;
     providers: Provider[],
     editProvider: (provider: Provider) => void;
+    onShowBtsList?: (provider: string, technology?: Technology) => void;
 }
 
 const ProviderTable = (props: ProviderTableProps) => {
@@ -51,14 +58,17 @@ const ProviderTable = (props: ProviderTableProps) => {
 
     const providerRows: TableProps["rows"] = props.providers.map(data => ({
         key: data.provider,
-        network:  <Typography color="textSecondary" variant="body2">{providerConf[data.provider]?.title}</Typography>,
+        network: <div className={classes.network}>
+            { providerConf[data.provider]?.icon && <DynamicIcon iconUrl={providerConf[data.provider].icon}/> }
+            <Typography color="textSecondary" variant="body2">{providerConf[data.provider]?.title}</Typography>
+        </div>,
         mcc: <ProviderTextField disabled={!props.editable} fieldName="mcc" provider={data} editProvider={props.editProvider}/>,
         mnc: <ProviderTextField disabled={!props.editable} fieldName="mnc" provider={data} editProvider={props.editProvider}/>,
         all: <Typography
             color="textSecondary"
             variant="body2"
             classes={{root: classes.link}}
-            onClick={() => setDialogData({ provider: data.provider })}
+            onClick={() => props.onShowBtsList ? props.onShowBtsList(data.provider) : setDialogData({ provider: data.provider })}
         >
             {Object.values(providerConf[data.provider]?.btsList || []).reduce((sum, list) => sum + list.length, 0)}
         </Typography>,
@@ -66,7 +76,7 @@ const ProviderTable = (props: ProviderTableProps) => {
             color="textSecondary"
             variant="body2"
             classes={{root: classes.link}}
-            onClick={() => setDialogData({provider: data.provider, technology: "gsm"})}
+            onClick={() => props.onShowBtsList ? props.onShowBtsList(data.provider, "gsm") : setDialogData({provider: data.provider, technology: "gsm"})}
         >
             {providerConf[data.provider]?.btsList.gsm.length || 0}
         </Typography>,
@@ -74,7 +84,7 @@ const ProviderTable = (props: ProviderTableProps) => {
             color="textSecondary"
             variant="body2"
             classes={{root: classes.link}}
-            onClick={() => setDialogData({provider: data.provider, technology: "umts"})}
+            onClick={() => props.onShowBtsList ? props.onShowBtsList(data.provider, "umts") : setDialogData({provider: data.provider, technology: "umts"})}
         >
             {providerConf[data.provider]?.btsList.umts.length || 0}
         </Typography>,
@@ -82,7 +92,7 @@ const ProviderTable = (props: ProviderTableProps) => {
             color="textSecondary"
             variant="body2"
             classes={{root: classes.link}}
-            onClick={() => setDialogData({provider: data.provider, technology: "lte"})}
+            onClick={() => props.onShowBtsList ? props.onShowBtsList(data.provider, "lte") : setDialogData({provider: data.provider, technology: "lte"})}
         >
             {providerConf[data.provider]?.btsList.lte.length || 0}
         </Typography>,

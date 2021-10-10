@@ -1,11 +1,10 @@
-import React, { FC } from "react";
+import React, {FC} from "react";
 import Step from "@material-ui/core/Step/Step";
-import MuiStepper, { StepperProps as MuiStepperProps } from "@material-ui/core/Stepper";
+import MuiStepper, {StepperProps as MuiStepperProps} from "@material-ui/core/Stepper";
 import StepLabel from "@material-ui/core/StepLabel/StepLabel";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import cx from "classNames";
-import {StepConnector} from "@material-ui/core";
-import CheckCircle from "@material-ui/icons/CheckCircle";
+import StepConnector from "@material-ui/core/StepConnector";
 
 const useStyles = makeStyles((theme) => ({
     stepperRoot: {

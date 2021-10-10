@@ -11,7 +11,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, "dist", "client"),
         filename: "[name].[chunkhash].js",
-        library: "AltiusDemo",
+        library: "CAS",
         libraryTarget: "umd"
     },
     plugins: [
@@ -26,7 +26,7 @@ module.exports = {
         new CleanWebpackPlugin(),
         new CopyPlugin({
             patterns: [
-                { from:  path.join(__dirname, "public"), to: "" }
+                { from:  path.join(__dirname, "src", "client", "assets", "dynamic"), to: "assets/dynamic" }
             ]
         })
     ],

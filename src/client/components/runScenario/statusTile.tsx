@@ -50,8 +50,8 @@ interface StatusTileProps {
 const getTimer = (fromDate: Date): string => {
     const duration = moment.duration(Date.now() - fromDate.getTime(), 'milliseconds');
     // const diff = Date.now() - (props.value as Date).getTime();
-    const min = duration.minutes() > 10 ? duration.minutes() : "0" + duration.minutes();
-    const sec = duration.seconds() > 10 ? duration.seconds() : "0" + duration.seconds();
+    const min = duration.minutes() >= 10 ? duration.minutes() : "0" + duration.minutes();
+    const sec = duration.seconds() >= 10 ? duration.seconds() : "0" + duration.seconds();
     return duration.hours() + ":" + min + ":" + sec;
 }
 

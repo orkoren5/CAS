@@ -11,12 +11,12 @@ type ScenarioTextFieldProps = { scenario: Scenario, fieldName: keyof Scenario, e
 const ScenarioTextField = (props: TextFieldProps & ScenarioTextFieldProps) => {
     const { scenario, fieldName, editScenario, ...textFieldProps } = props;
     return <TextField
-        onBlur={(e) => {
+        onChange={(e) => {
             const newScenario = { ...scenario, [fieldName]: e.target.value }
             editScenario(newScenario);
         }}
         fullWidth
-        defaultValue={scenario[fieldName]}
+        value={scenario[fieldName]}
         {...textFieldProps}
     />;
 }
@@ -40,19 +40,19 @@ const ScenarioMetadata = ({ editMode, scenario, setScenario }: ScenarioMetadataP
         <TextField
             label="Creation date"
             disabled
-            defaultValue={dateformat(scenario.creationDate, "dd.mm.yy hh:MM")}
+            value={dateformat(scenario.creationDate, "dd.mm.yy hh:MM")}
         />
         <TextField
             label="Last save date"
             fullWidth
             disabled
-            defaultValue={dateformat(scenario.lastSaveDate, "dd.mm.yy hh:MM")}
+            value={dateformat(scenario.lastSaveDate, "dd.mm.yy hh:MM")}
         />
         <TextField
             label="Last save date"
             fullWidth
             disabled
-            defaultValue={scenario.lastRunDate ? dateformat(scenario.lastRunDate, "dd.mm.yy hh:MM") : ""}
+            value={scenario.lastRunDate ? dateformat(scenario.lastRunDate, "dd.mm.yy hh:MM") : ""}
         />
         <div className="scenario-location">
             <Typography className="scenario-location-title" color="textPrimary">Shelter Location</Typography>
@@ -81,7 +81,7 @@ const ScenarioMetadata = ({ editMode, scenario, setScenario }: ScenarioMetadataP
             InputProps={{
                 endAdornment: editMode ? <InputAdornment position="end">km</InputAdornment>: undefined
             }}
-            defaultValue={editMode ? scenario.km : scenario.km + "km"}
+            value={editMode ? scenario.km : scenario.km + "km"}
         />
     </div>
 }

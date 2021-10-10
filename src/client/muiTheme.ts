@@ -6,6 +6,14 @@ export default createTheme({
     typography: {
         fontFamily: "Lato"
     },
+    props: {
+        MuiTypography: {
+            variantMapping: {
+                body2: "span",
+                body1: "span"
+            }
+        }
+    },
     palette: {
         // palette values for dark mode
         type: "dark",
