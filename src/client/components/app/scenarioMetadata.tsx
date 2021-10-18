@@ -49,7 +49,7 @@ const ScenarioMetadata = ({ editMode, scenario, setScenario }: ScenarioMetadataP
             value={dateformat(scenario.lastSaveDate, "dd.mm.yy hh:MM")}
         />
         <TextField
-            label="Last save date"
+            label="Last run date"
             fullWidth
             disabled
             value={scenario.lastRunDate ? dateformat(scenario.lastRunDate, "dd.mm.yy hh:MM") : ""}

@@ -4,7 +4,16 @@ const colorMain = "#0A68EB";
 
 export default createTheme({
     typography: {
-        fontFamily: "Lato"
+        fontFamily: "Lato",
+        h6: {
+            fontSize: 26
+        },
+        h5: {
+            fontSize: 22
+        },
+        h4: {
+            fontSize: 28
+        }
     },
     props: {
         MuiTypography: {
@@ -18,13 +27,13 @@ export default createTheme({
         // palette values for dark mode
         type: "dark",
         background: {
-            paper: "#0E305C"
+            paper: "#0E305C",
         },
         primary: {
             main: colorMain
         },
         action: {
-            hover: "#112033",
+            hover: "#3086ff",
         },
         success: {
             main: "#50e3c2"
@@ -42,6 +51,9 @@ export default createTheme({
         MuiButton: {
             root: {
               textTransform: "unset"
+            },
+            outlined: {
+                border: "1px solid #5e7a9b"
             },
             contained: {
                 "&.Mui-disabled": {
@@ -125,15 +137,10 @@ export default createTheme({
                 lineHeight: "unset"
             },
             h6: {
-                fontSize: 26,
                 fontFamily: "Lato"
             },
             h5: {
-                fontSize: 22,
                 lineHeight: "34px"
-            },
-            h4: {
-                fontSize: 28
             }
         },
         MuiTooltip: {
@@ -155,6 +162,11 @@ export default createTheme({
                 "&.Mui-checked": {
                     transform: "translateX(23px)"
                 }
+            }
+        },
+        MuiInputAdornment: {
+            positionEnd: {
+                marginRight: 8
             }
         }
     }

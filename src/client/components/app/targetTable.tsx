@@ -3,7 +3,8 @@ import Table, {TableProps} from "../common/table";
 import {Target} from "../../../common/types/Target";
 import TextField from "../common/textField";
 import IconButton from "@material-ui/core/IconButton";
-import Delete from "@material-ui/icons/Delete";
+//@ts-ignore
+import Delete from "../../assets/icons/delete-icon.svg"
 import Checkbox from "@material-ui/core/Checkbox";
 import cx from "classNames";
 import {styled} from "@material-ui/core/styles";
@@ -30,7 +31,7 @@ const TargetTextField = (props: TextFieldProps & { target: Target, fieldName: ke
 }
 
 const StyledButton = styled(Button)(({ theme }) => ({
-    backgroundColor: "#172A42",
+    backgroundColor: "#071d3a",
     fontSize: 12,
     maxWidth: 100
 }));

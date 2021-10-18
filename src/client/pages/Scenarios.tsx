@@ -5,7 +5,7 @@ import AppHeader from "../components/common/appHeader";
 import NoScenarios from "../components/app/noScenarios";
 import {useSelector} from "react-redux";
 import {getScenarios} from "../state/selectors";
-import ScenariosTable from "../components/app/scenariosTable";
+import ScenariosPage from "../components/app/scenariosPage";
 
 function Scenarios() {
     const [open, setOpen] = useState<boolean>(false);
@@ -18,7 +18,7 @@ function Scenarios() {
                 <NoScenarios onAddScenarioClick={() => setOpen(true)}/>
             }
             { !noScenarios &&
-                <ScenariosTable onAddScenarioClick={() => setOpen(true)}/>
+                <ScenariosPage onAddScenarioClick={() => setOpen(true)}/>
             }
             <NewScenarioDialog onClose={() => setOpen(false)} open={open}/>
         </div>

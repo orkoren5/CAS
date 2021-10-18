@@ -8,21 +8,39 @@ import TableRow from "@material-ui/core/TableRow";
 import cx from "classNames";
 
 export interface TableProps {
-    headers: ({ title: string | React.ReactElement, colspan?: number } | string)[][],
+    headers: ({ title: string | React.ReactElement, colspan?: number } | string )[][],
     columns: string[],
-    rows: ({ key: string } & Record<string, React.ReactElement | string>)[],
-    hoverColor?: boolean;
+    rows: ({ key: string, onClick?: () => void } & Record<string, React.ReactElement | string>)[],
+    selectedRow?: string;
 }
 
 export const useTableStyles = makeStyles((theme) =>  ({
-    tableRowHover: {
-        "&:hover": {
-            backgroundColor: "#0c68e9 !important",
-        },
+    selected: {
+        "&:after": {
+            content: "''",
+            left: 0,
+            width: 5,
+            height: "100%",
+            position: "absolute",
+            backgroundColor: theme.palette.primary.main + " !important",
+        }
+    },
+    hover: {
+        "&:hover:after": {
+            content: "''",
+            left: 0,
+            width: 5,
+            height: "100%",
+            position: "absolute",
+            backgroundColor: "#104996"
+        }
+    },
+    clickableRow: {
+        cursor: "pointer"
     },
     tableRow: {
         backgroundColor: "#172A42",
-
+        position: "relative",
         '&:nth-of-type(odd)': {
             backgroundColor: "#112033"
         },
@@ -53,7 +71,10 @@ const Table = (props: TableProps) => {
         <TableBody>
             {
                 props.rows.map(row => (
-                    <TableRow classes={{root: cx(styles.tableRow, { [styles.tableRowHover]: props.hoverColor })}} key={row.key}>
+                    <TableRow
+                        classes={{root: cx(styles.tableRow, { [styles.clickableRow]: row.onClick }, { [styles.selected]: row.key === props.selectedRow })}}
+                        key={row.key}
+                    >
                         {
                             props.columns.map((col) => (
                                 <TableCell key={row.key + "-" + col}>{row[col]}</TableCell>

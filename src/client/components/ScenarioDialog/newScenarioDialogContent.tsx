@@ -120,7 +120,7 @@ const ScenarioDialogContent: FC<ScenarioDialogContentProps> = (props: ScenarioDi
             imsi: 0
         };
 
-        setTargets([...targets, newTarget]);
+        setTargets([newTarget, ...targets]);
     }
 
     const handleEditScenario = (scenario: Partial<Scenario>) => {

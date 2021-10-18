@@ -11,7 +11,7 @@ import DynamicIcon from "../common/dynamicIcon";
 
 const providerCols = ["network", "mcc", "mnc", "all", "gsm", "umts", "lte", "ues number"];
 const providerHeaders: TableProps["headers"] = [
-    ["Network", "MCC", "MNC", { title: "BTScounter", colspan: 4}, "UEs Number"],
+    ["Network", "MCC", "MNC", { title: <div style={{ borderBottom: "1px solid #1f3654", paddingBottom: 5, marginBottom: -5 }}>BTScounter</div>, colspan: 4}, "UEs Number"],
     [{ title: "", colspan: 3}, "All", "GSM", "UMTS", "LTE", ""]
 ];
 

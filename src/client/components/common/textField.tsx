@@ -40,15 +40,16 @@ const TextField = (props: MuiTextFieldProps) => {
     return <MuiTextField
         {...props}
         InputLabelProps={{
-            ...props.InputLabelProps,
             shrink: true,
-            classes: { shrink: classes.labelShrink }
+            classes: { shrink: classes.labelShrink },
+            ...props.InputLabelProps
         }}
         InputProps={{
             ...props.InputProps,
             classes: {
                 root: classes.inputRoot + " " + (props.label ? classes.withLabel : ""),
-                input: classes.inputInput
+                input: classes.inputInput,
+                ...props.InputProps?.classes,
             }
         }}
     />

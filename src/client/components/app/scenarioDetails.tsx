@@ -24,7 +24,7 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
 
     useEffect(() => {
         setEditableScenario(props.scenario);
-    }, [props.editMode]);
+    }, [props.editMode, props.scenario.id]);
 
     const handleSaveScenario = (asNew: boolean) => {
         if (asNew) {
@@ -79,8 +79,8 @@ const ScenarioDetails = (props: ScenarioDetailsProps) => {
         setEditableScenario({
             ...scenario,
             targets: [
-                ...scenario.targets,
-                newTarget
+                newTarget,
+                ...scenario.targets
             ]
         })
     }

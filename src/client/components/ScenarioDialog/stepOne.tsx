@@ -2,7 +2,8 @@ import React, {FC} from "react";
 import TextField from "../common/textField";
 import Dropzone from "../common/dropzone";
 import Cancel from "@material-ui/icons/Cancel";
-import Delete from "@material-ui/icons/Delete";
+//@ts-ignore
+import Delete from "../../assets/icons/delete-icon.svg"
 import { TextFieldProps } from "@material-ui/core/TextField";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import IconButton from "@material-ui/core/IconButton";
