@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 3</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Simulator" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Main-screen_edit-scenario" transform="translate(-1389.000000, -723.000000)">
+            <g id="Group-10" transform="translate(945.000000, 717.000000)">
+                <g id="Group-3" transform="translate(445.600100, 7.500000)">
+                    <rect id="Rectangle-16-Copy-44" stroke="#1D3450" fill="#0C1624" x="-0.5" y="-0.5" width="21" height="21"></rect>
+                    <g id="icons/General/Approve" transform="translate(2.399902, 2.500000)" filter="url(#filter-1)">
+                        <g>
+                            <path d="M12.6666667,4.66666671 C12.2984664,4.29848003 11.7015333,4.29847337 11.3333334,4.66666671 L6.66666653,9.33333332 L4.66666663,7.33333336 C4.29847332,6.96513345 3.70152003,6.96513345 3.33333332,7.33333336 C2.96514666,7.70153336 2.96514666,8.29846683 3.33333332,8.66666652 L6.1952599,11.5286001 C6.45561321,11.7889335 6.87773338,11.7889335 7.13806663,11.5286001 L12.6666667,6.00000006 C13.0348676,5.63181341 13.0348676,5.03485336 12.6666667,4.66666671 Z" id="Path" fill="#5E7A9B"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

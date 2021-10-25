@@ -15,6 +15,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {applyFilter} from "../../state/filter/actions";
 import {FilterState} from "../../state/filter/reducer";
 import {getFilters} from "../../state/filter/selectors";
+import BasicDatePicker from "../common/basicDatePicker";
 
 const useStyles = makeStyles((theme) => ({
     titleRoot: {
@@ -90,11 +91,11 @@ const FilterDialogContent = ({ onClose }: { onClose: () => void }) => {
         setFilterBy(value);
     }
 
-    const handleFromChange = (event: any) => {
-        setFrom(event.target.value);
+    const handleFromChange = (date: Date | null) => {
+        setFrom(date);
     }
-    const handleToChange = (event: any) => {
-        setTo(event.target.value);
+    const handleToChange = (date: Date | null) => {
+        setTo(date);
     }
     const handleClear = () => {
         dispatch(applyFilter({ filterBy: "creationDate", fromDate: null, toDate: null }));
@@ -120,9 +121,10 @@ const FilterDialogContent = ({ onClose }: { onClose: () => void }) => {
                     date</ToggleButton>
             </ToggleButtonGroup>
             <Typography variant="body1" color="textPrimary">From</Typography>
-            <TextField type="date" value={fromDate || ""} onChange={handleFromChange}/>
+            {/*<TextField type="date" value={fromDate || ""} onChange={handleFromChange}/>*/}
+            <BasicDatePicker value={fromDate || null} setValue={handleFromChange}/>
             <Typography variant="body1" color="textPrimary">To</Typography>
-            <TextField type="date" value={toDate || ""} onChange={handleToChange}/>
+            <BasicDatePicker value={toDate || null} setValue={handleToChange}/>
         </DialogContent>
         <DialogActions classes={{root: classes.actionsRoot, spacing: classes.actionsSpacing}} color="primary">
             <Button classes={{root: classes.grow}} variant="contained" color="primary" onClick={handleApply}>

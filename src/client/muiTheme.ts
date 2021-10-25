@@ -80,6 +80,19 @@ export default createTheme({
                 padding: "3px 7px"
             }
         },
+        MuiIconButton: {
+            root: {
+                "& svg": {
+                    transition: "color 0.1s"
+                },
+                "&:hover": {
+                    backgroundColor: "unset",
+                    "& svg": {
+                        color: "#104996"
+                    }
+                }
+            }
+        },
         MuiDialog: {
             paperWidthMd: {
                 maxWidth: 870
@@ -167,6 +180,16 @@ export default createTheme({
         MuiInputAdornment: {
             positionEnd: {
                 marginRight: 8
+            }
+        },
+        MuiCalendarPicker: {
+            root: {
+                backgroundColor: "#072041"
+            }
+        },
+        MuiPickerDay: {
+            root: {
+                color: "white"
             }
         }
     }

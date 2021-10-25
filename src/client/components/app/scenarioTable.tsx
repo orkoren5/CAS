@@ -27,7 +27,6 @@ import {getFilters, getSort} from "../../state/filter/selectors";
 import FilterDialog from "./filterDialog";
 import ArrowRightAlt from "@material-ui/icons/ArrowRightAlt";
 import {setSort} from "../../state/filter/actions";
-import { Resizable } from "react-resizable";
 
 interface ScenarioTableProps {
     scenarios: Scenario[];
@@ -132,23 +131,25 @@ const HeaderCell = ({ children, field }: { children: string, field: keyof Scenar
         resizer.className = styles.resizer;
         element?.appendChild(resizer);
         resizer.addEventListener('mousedown', initResize, false);
-        element.addEventListener('mouseenter', setHeight);
+        element?.addEventListener('mouseenter', setHeight);
 
         function setHeight() {
             resizer.style.height = document.getElementById('scenario-table')?.offsetHeight + "px";
         }
 
-        function initResize(e) {
+        function initResize(e: any) {
             e.stopPropagation();
             window.addEventListener('mousemove', Resize, false);
             window.addEventListener('mouseup', stopResize, false);
         }
-        function Resize(e) {
+        function Resize(e: any) {
             e.preventDefault();
-            element.style.width = (e.clientX - element.offsetLeft - 26) + 'px'; // 26 is app-padding
-            element.style.minWidth = (e.clientX - element.offsetLeft - 26) + 'px'; // 26 is app-padding
+            if (element) {
+                element.style.width = (e.clientX - element.offsetLeft - 26) + 'px'; // 26 is app-padding
+                element.style.minWidth = (e.clientX - element.offsetLeft - 26) + 'px'; // 26 is app-padding
+            }
         }
-        function stopResize(e) {
+        function stopResize() {
             window.removeEventListener('mousemove', Resize, false);
             window.removeEventListener('mouseup', stopResize, false);
         }

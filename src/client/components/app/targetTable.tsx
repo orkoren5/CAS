@@ -5,6 +5,10 @@ import TextField from "../common/textField";
 import IconButton from "@material-ui/core/IconButton";
 //@ts-ignore
 import Delete from "../../assets/icons/delete-icon.svg"
+//@ts-ignore
+import CheckboxChecked from "../../assets/icons/checkbox-checked.svg";
+//@ts-ignore
+import CheckboxUnchecked from "../../assets/icons/checkbox-unchecked.svg";
 import Checkbox from "@material-ui/core/Checkbox";
 import cx from "classNames";
 import {styled} from "@material-ui/core/styles";
@@ -90,8 +94,17 @@ const TargetTable = (props: TargetTableProps) => {
                         color="textPrimary"
                         control={
                             props.editable ?
-                                <Checkbox checked={props.loadToManipulation} disabled={!props.editable} onChange={(e) => props.setLoadToManipulation(e.target.checked)} color="default"/> :
-                                props.loadToManipulation ? <StyledCheck/> : <></>
+                                <Checkbox
+                                    checked={props.loadToManipulation}
+                                    disabled={!props.editable}
+                                    onChange={(e) => props.setLoadToManipulation(e.target.checked)}
+                                    checkedIcon={<CheckboxChecked/>}
+                                    icon={<CheckboxUnchecked/>}
+                                    color="default"
+                                /> :
+                                props.loadToManipulation ?
+                                    <StyledCheck/> :
+                                    <></>
                         }
                     />
                     }
