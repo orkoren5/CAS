@@ -75,14 +75,15 @@ function RunScenario() {
                         </Button>
                     </div>
                     <div className="run-scenario-status">
-                        <StatusTile title="Status" value={runStatus.status === "running" ? "Running" : "Stopped"} subtitle="" status={runStatus.status} icon={<StatusIcon/>}/>
+                        <StatusTile fixPos={false} title="Status" value={runStatus.status === "running" ? "Running" : "Stopped"} subtitle="" status={runStatus.status} icon={<StatusIcon/>}/>
                         <StatusTile
+                            fixPos={true}
                             title="Start run time"
                             value={startRunTime}
                             subtitle={startRunDate}
                             status="regular" icon={<StartTimeIcon/>}
                         />
-                        <StatusTile title="Duration" value={scenario.lastRunDate || ""} subtitle="" status="regular" icon={<DurationIcon/>}/>
+                        <StatusTile fixPos={true} title="Duration" value={scenario.lastRunDate || ""} subtitle="" status="regular" icon={<DurationIcon/>}/>
                     </div>
                     <div className="run-scenario-details">
                         <ScenarioMetadata editMode={false} scenario={scenario} setScenario={() => {}}/>

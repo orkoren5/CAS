@@ -1,5 +1,4 @@
 .run-scenario {
-    min-width: 800px;
     max-width: 800px;
     background-color: #112033;
     display: flex;
@@ -33,7 +32,8 @@
 
 .stations-container {
     flex-grow: 1;
-    padding: 20px;
+    min-width: 915px;
+    padding: 20px 15px 20px 20px;
     overflow: auto;
 
     .stations-title {
@@ -45,5 +45,8 @@
     display: inline-flex;
     flex-direction: column;
     gap: 10px;
-    margin-right: 10px;
+
+    &:not(:last-child) {
+        margin-right: 10px;
+    }
 }

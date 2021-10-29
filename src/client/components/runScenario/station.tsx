@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main,
         border: "1px solid " + theme.palette.primary.main,
         borderRadius: 0,
-        minWidth: 100,
+        minWidth: 98,
         "&.Mui-selected": {
             backgroundColor: theme.palette.primary.main,
             color: "white",
@@ -117,14 +117,14 @@ const SwitchBar = ({ checked, title, onCheck } : { checked: boolean, title: stri
 
     return <div className={styles.switchBar}>
         <Typography className={styles.switchIndex} variant="body2">{title}</Typography>
-        <Typography variant="body2">OK</Typography>
+        <Typography color="textSecondary" variant="subtitle2">OK</Typography>
         <Switch
             classes={{ switchBase: styles.switchBase, track: styles.switchTrack }}
             onChange={(e) => onCheck(e.target.checked)}
             checked={checked}
             color="default"
         />
-        <Typography variant="body2">Faulty</Typography>
+        <Typography color="textSecondary" variant="subtitle2">Faulty</Typography>
     </div>
 }
 

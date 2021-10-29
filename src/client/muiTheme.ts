@@ -13,6 +13,9 @@ export default createTheme({
         },
         h4: {
             fontSize: 28
+        },
+        subtitle2: {
+            fontSize: 12
         }
     },
     props: {
@@ -136,6 +139,12 @@ export default createTheme({
                 whiteSpace: "nowrap",
                 textOverflow: "ellipsis",
                 overflow: "hidden"
+            },
+            sizeSmall: {
+                padding: "6px 16px",
+                "&:first-child": {
+                    paddingLeft: 24
+                }
             }
         },
         MuiStepLabel: {
@@ -166,6 +175,9 @@ export default createTheme({
             }
         },
         MuiSwitch: {
+            root: {
+                margin: "0 -5px"
+            },
             thumb: {
                 height: 13,
                 width: 13

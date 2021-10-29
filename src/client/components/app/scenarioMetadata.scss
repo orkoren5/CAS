@@ -7,6 +7,10 @@
     grid-column: 1 / span 3;
   }
 
+  .scenario-description-input {
+    text-overflow: ellipsis;
+  }
+
   .scenario-location {
     display: grid;
     gap: 5px;

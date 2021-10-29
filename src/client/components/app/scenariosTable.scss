@@ -4,6 +4,10 @@
   padding-bottom: 15px;
 }
 
+//#scenario-table {
+//    table-layout: fixed;
+//}
+
 .tables-container {
   display: flex;
   justify-content: space-between;
@@ -11,16 +15,20 @@
   height: 0;
   background-color: #0b192a;
   position: relative;
+  --right-side-width: 47%;
 
   .scenario-table {
       flex-grow: 1;
+      background-color: #112033
   }
 }
 
 .scenario-details {
-    width: 50%;
+    width: var(--right-side-width);
+    min-width: var(--right-side-width);
     position: relative;
-    padding: 20px 25px 60px 25px;
+    padding: 20px 25px 0 25px;
+    margin-bottom: var(--run-scenario-bar-height);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -31,6 +39,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
+
+      .scenario-title--name {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
+
       .grow {
         flex-grow: 1;
       }
@@ -40,7 +55,8 @@
 .run-scenario-bar {
   position: absolute;
   bottom: 0;
-  width: calc(50% + var(--app-padding));
+  height: var(--run-scenario-bar-height);
+  width: calc(var(--right-side-width) + var(--app-padding));
   right: calc(var(--app-padding) * -1);
   display: flex;
   flex-direction: row-reverse;

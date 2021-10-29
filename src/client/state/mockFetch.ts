@@ -39,12 +39,12 @@ const fetch = <T>(route: string, options: Record<string, any>): Promise<MockFetc
         case "/addScenario": {
             const scenario = options.body;
             const now = new Date().toISOString();
-            return wrapFetch({...scenario, id: now, creationDate: now, lastSaveDate: now}, 1000);
+            return wrapFetch({...scenario, id: now, creationDate: now, lastSaveDate: now}, 0);
         }
         case "/editScenario": {
             const scenario = options.body;
             const now = new Date().toISOString();
-            return wrapFetch({...scenario, lastSaveDate: now}, 1000);
+            return wrapFetch({...scenario, lastSaveDate: now}, 0);
         }
         case "/deleteScenario":
         case "/runScenario":

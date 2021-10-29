@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme) => ({
     },
     iconsContainer: {
         display: "flex",
-        gap: 25
+        gap: 25,
+        justifyContent: "flex-end"
     },
     tooltipTitle: {
         color: theme.palette.text.primary
@@ -77,12 +78,12 @@ const useStyles = makeStyles((theme) => ({
     },
     headerCell: {
         cursor: "pointer",
-        width: 200,
-        minWidth: 200,
+        width: 180,
+        minWidth: 180,
         overflow: "visible"
     },
     headerTitle: {
-        marginRight: 40
+        marginRight: 8
     },
     resizer: {
         position: "absolute",
@@ -117,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const HeaderCell = ({ children, field }: { children: string, field: keyof Scenario}) => {
+const HeaderCell = ({ children, field, nextField }: { children: string, field: keyof Scenario, nextField?: keyof Scenario}) => {
     const styles = useStyles();
     const sort = useSelector(getSort);
     const dispatch = useDispatch();
@@ -126,6 +127,8 @@ const HeaderCell = ({ children, field }: { children: string, field: keyof Scenar
 
     useEffect(() => {
         const element = document.getElementById("field-" + field);
+        const tableElem = document.getElementById("scenario-table");
+        const nextElement = document.getElementById("field-" + nextField);
         const resizer = document.createElement('div');
 
         resizer.className = styles.resizer;
@@ -145,8 +148,20 @@ const HeaderCell = ({ children, field }: { children: string, field: keyof Scenar
         function Resize(e: any) {
             e.preventDefault();
             if (element) {
-                element.style.width = (e.clientX - element.offsetLeft - 26) + 'px'; // 26 is app-padding
-                element.style.minWidth = (e.clientX - element.offsetLeft - 26) + 'px'; // 26 is app-padding
+                const newWidth = (e.clientX - element.offsetLeft - 26);
+                const oldWidth = element.getBoundingClientRect().width;
+                element.style.width = newWidth + 'px'; // 26 is app-padding
+                element.style.minWidth = newWidth + 'px'; // 26 is app-padding
+                if (nextElement) {
+                    nextElement.style.minWidth = "0";
+                }
+
+                const tableWidth = tableElem?.getBoundingClientRect().width;
+                const parentWidth = tableElem?.parentNode?.parentNode?.getBoundingClientRect().width;
+                if (tableWidth >= parentWidth * 53 / 100 + 1 && newWidth > oldWidth) {
+                    element.style.width = oldWidth + "px";
+                    element.style.minWidth = oldWidth + 'px';
+                }
             }
         }
         function stopResize() {
@@ -190,12 +205,11 @@ const ScenarioTable = (props: ScenarioTableProps) => {
         <Table stickyHeader size="small" id="scenario-table">
             <TableHead>
                 <TableRow classes={{root: tableStyle.tableRow}}>
-                    <HeaderCell field="name">Scenario Name</HeaderCell>
-                    <HeaderCell field="description">Description</HeaderCell>
-                    <HeaderCell field="lastSaveDate">Last Save Date</HeaderCell>
+                    <HeaderCell field="name" nextField="description">Scenario Name</HeaderCell>
+                    <HeaderCell field="description" nextField="lastSaveDate">Description</HeaderCell>
+                    <HeaderCell field="lastSaveDate" nextField="lastRunDate">Last Save Date</HeaderCell>
                     <HeaderCell field="lastRunDate">Last Run Date</HeaderCell>
-                    <TableCell />
-                    <TableCell style={{width: 10}}>{filterIcon}</TableCell>
+                    <TableCell>{filterIcon}</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -206,7 +220,11 @@ const ScenarioTable = (props: ScenarioTableProps) => {
                             classes={{root: cx(tableStyle.tableRow, tableStyle.hover, { [tableStyle.selected]: scenario.id === props.selected }, classes.scenarioTableRow)}}
                             key={scenario.id}
                         >
-                            <TableCell><Typography color="textSecondary" variant="body2">{scenario.name}</Typography></TableCell>
+                            <TableCell classes={{root: classes.descCell}}>
+                                <Tooltip arrow placement="top-start" title={scenario.name} >
+                                    <Typography color="textSecondary" variant="body2">{scenario.name}</Typography>
+                                </Tooltip>
+                            </TableCell>
                             <TableCell classes={{root: classes.descCell}}>
                                 <Tooltip arrow placement="top-start" title={scenario.description} >
                                     <Typography color="textSecondary" variant="body2">{scenario.description}</Typography>
@@ -218,7 +236,6 @@ const ScenarioTable = (props: ScenarioTableProps) => {
                                     {scenario.lastRunDate ? dateformat(scenario.lastRunDate, "dd.mm.yy hh:MM") : ""}
                                 </Typography>
                             </TableCell>
-                            <TableCell/>
                             <TableCell>
                                 <div className={classes.iconsContainer}>
                                     <IconButton onClick={() => props.onEdit(scenario.id)} classes={{ root: classes.invisibleIconBtn }}><Edit/></IconButton>

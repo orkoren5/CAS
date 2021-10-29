@@ -10,6 +10,7 @@ import {makeStyles, styled} from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
+import TextOverflow from "../common/textOverflow";
 
 interface ScenarioTitleProps {
     title: string;
@@ -69,13 +70,15 @@ const useStyles = makeStyles((theme) => ({
 const ScenarioTitle = (props: ScenarioTitleProps) => {
     const btnRef = useRef<HTMLButtonElement>(null);
     const [open, setOpen] = useState<boolean>(false);
+    const ref = useRef<HTMLSpanElement>(null);
     const classes = useStyles();
 
     return <div className="scenario-title">
         { props.editMode ?
             <TextField className="grow" InputProps={{ classes: { input: classes.nameInput }}} key={props.title} defaultValue={props.title} onBlur={(e) => props.onChangeTitle(e.target.value)}/> :
-            <Typography color="textPrimary" className="grow" variant="h6">{props.title}</Typography>
-
+            <TextOverflow refElem={ref?.current} innerText={props.title}>
+                <Typography ref={ref} color="textPrimary" className="scenario-title--name grow" variant="h6">{props.title}</Typography>
+            </TextOverflow>
         }
         <StyledIconButton onClick={props.onDelete}><Delete/></StyledIconButton>
         <Button variant="outlined" onClick={() => props.onEdit(!props.editMode)}>{props.editMode ? "Cancel" : "Edit"}</Button>

@@ -1,10 +1,9 @@
 import React from "react";
 import "./scenarioMetadata.scss";
-import TextField from "../common/textField";
+import TextField, {TextFieldProps} from "../common/textField";
 import Typography from "@material-ui/core/Typography";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Scenario} from "../../../common/types/Scenario";
-import {TextFieldProps} from "@material-ui/core";
 import dateformat from "dateformat";
 
 type ScenarioTextFieldProps = { scenario: Scenario, fieldName: keyof Scenario, editScenario: (scenario: Scenario) => void };
@@ -36,6 +35,8 @@ const ScenarioMetadata = ({ editMode, scenario, setScenario }: ScenarioMetadataP
             disabled={!editMode}
             scenario={scenario}
             editScenario={setScenario}
+            overflowTooltip={true}
+            InputProps={{classes: { input: "scenario-description-input" }}}
         />
         <TextField
             label="Creation date"

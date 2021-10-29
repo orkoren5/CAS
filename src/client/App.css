@@ -2,6 +2,7 @@
 
 .App {
   --app-padding: 26px;
+  --run-scenario-bar-height: 60px;
 
   height: 100vh;
   padding: 70px var(--app-padding) 0 var(--app-padding);

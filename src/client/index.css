@@ -14,6 +14,7 @@
 }
 
 body {
+  --scroll-bar-width: 5px;
   margin: 0;
   background: #143068 url(assets/images/background.svg) no-repeat;
   background-size: cover;
@@ -31,7 +32,7 @@ code {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: var(--scroll-bar-width);
   height: 5px;
 }
 

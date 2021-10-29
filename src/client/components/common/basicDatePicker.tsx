@@ -33,7 +33,7 @@ const usePaperStyles = makeStyles((theme) => ({
 
 const useBtnStyles = makeStyles((theme) => ({
     root: {
-        color: theme.palette.primary.main + " !important",
+        color: theme.palette.text.secondary + " !important",
         marginLeft: "-40px !important"
     },
 }));

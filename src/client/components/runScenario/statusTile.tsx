@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     icon: {
         position: "absolute",
-        right: "calc(100% - 80px)",
+        right: "calc(100% - 73px)",
         top: 15
     }
 }));
@@ -45,6 +45,7 @@ interface StatusTileProps {
     subtitle: string;
     status: "running" | "stopped" | "regular"
     icon: React.ReactElement;
+    fixPos: boolean; // omg ugly - no time to improve solution
 }
 
 const getTimer = (fromDate: Date): string => {
@@ -68,9 +69,11 @@ const StatusTile = (props: StatusTileProps) => {
         }
     }, [props.value]);
 
+    const fixStyle = props.fixPos ? { right: "calc(100% - 56px)" } : {}; // omg ugly - no time to improve solution
+
     return (
         <div className={styles.tile}>
-            <div className={styles.icon}>{props.icon}</div>
+            <div className={styles.icon} style={fixStyle}>{props.icon}</div>
             <Typography variant="subtitle1" color="textPrimary" classes={{ root: styles.title }}>{props.title}</Typography>
             <Typography variant="h4" classes={{ root: styles.value + " " + props.status }}>{typeof props.value == "string" ? props.value : displayValue}</Typography>
             <Typography variant="subtitle1" color="textPrimary" classes={{ root: styles.subtitle }}>{props.subtitle}</Typography>

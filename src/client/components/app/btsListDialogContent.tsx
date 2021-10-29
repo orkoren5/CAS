@@ -10,7 +10,7 @@ import {Technology} from "../../../common/types/Provider";
 
 export const useStyles = makeStyles((theme) => ({
     contentRoot: {
-        padding: 25,
+        padding: "0 25px 25px 25px",
         display: "flex",
         flexDirection: "column",
         gap: 10,
