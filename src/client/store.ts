@@ -20,6 +20,8 @@ const rootReducer = combineReducers({
     filter: filterReducer
 });
 
+export type GlobalReducer = typeof rootReducer;
+
 let store = createStore(rootReducer, composedEnhancer);
 
 export { store }

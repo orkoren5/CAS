@@ -8,12 +8,22 @@ import {
     CHANGE_STATION_MODE,
     DELETE_SCENARIO,
     EDIT_SCENARIO,
+    GET_SCENARIOS,
     RUN_SCENARIO,
     STOP_SCENARIO
 } from "./consts";
 import {ActionCreator, AnyAction} from "redux";
 import {Scenario} from "../../common/types/Scenario";
 import {SystemMode} from "../../common/types/Run";
+
+export const getScenariosRequest: ActionCreator<AnyAction> = () => ({
+    type: apiRequest(GET_SCENARIOS)
+})
+
+export const getScenariosSuccess: ActionCreator<AnyAction> = (scenarios: Record<string, Scenario>) => ({
+    type: apiSuccess(GET_SCENARIOS),
+    payload: scenarios
+});
 
 export const addScenarioRequest: ActionCreator<AnyAction> = () => ({
     type: apiRequest(ADD_SCENARIO)

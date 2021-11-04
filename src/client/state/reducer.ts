@@ -10,6 +10,7 @@ import {
     CHANGE_STATION_MODE,
     DELETE_SCENARIO,
     EDIT_SCENARIO,
+    GET_SCENARIOS,
     RUN_SCENARIO,
     STOP_SCENARIO
 } from "./consts";
@@ -30,7 +31,7 @@ export interface MainState {
             }
         }
     },
-    scenarios: Record<string, Scenario>,
+    scenarios: Record<string, Scenario> | null,
     runStatus: Record<string, {
         status: "running" | "stopped",
         stations: Station[];
@@ -42,54 +43,7 @@ const initialState: MainState = {
         providers: {}
     },
     runStatus: {},
-    scenarios: {
-        "aaa": {
-            "id": "aaa",
-            "name": "fghf",
-            "description": "fgh",
-            "lat": 44,
-            "long": 66,
-            "km": 11,
-            "lastSaveDate": new Date(),
-            "creationDate": new Date(),
-            "loadToManipulation": false,
-            "targets": [
-                {
-                    "id": "1",
-                    "name": "ssfsd",
-                    "provider": "78",
-                    "imei": 7897,
-                    "imsi": 6789679
-                }
-            ],
-            "providers": [
-                {
-                    "provider": "partner",
-                    "mcc": 425,
-                    "mnc": 1,
-                    "ueNumber": 1344
-                },
-                {
-                    "provider": "cellcom",
-                    "mcc": 425,
-                    "mnc": 2,
-                    "ueNumber": 567
-                },
-                {
-                    "provider": "suny",
-                    "mcc": 425,
-                    "mnc": 2,
-                    "ueNumber": 567
-                },
-                {
-                    "provider": "hot-mobile",
-                    "mcc": 425,
-                    "mnc": 2,
-                    "ueNumber": 567
-                }
-            ]
-        }
-    }
+    scenarios: null
 }
 
 const changeStationStatus = (state: MainState, status: "paStatuses" | "btsStatuses" | "scannerStatuses", id: string, stationIndex: number, statusIndex: number, ok: boolean) => {
@@ -121,10 +75,16 @@ const getInitialStation = (): Station => ({
 
 function reducer(state = initialState, action: AnyAction) {
     switch (action.type) {
+        case apiRequest(GET_SCENARIOS):
         case apiRequest(ADD_SCENARIO):
         case apiRequest(EDIT_SCENARIO):
         case apiRequest(DELETE_SCENARIO):
             return state;
+        case apiSuccess(GET_SCENARIOS):
+            return {
+                ...state,
+                scenarios: action.payload
+            }
         case apiSuccess(ADD_SCENARIO):
         case apiSuccess(EDIT_SCENARIO):
             return {
@@ -177,7 +137,7 @@ function reducer(state = initialState, action: AnyAction) {
                 scenarios: {
                     ...state.scenarios,
                     [action.payload]: {
-                        ...state.scenarios[action.payload],
+                        ...(state.scenarios as Record<string, Scenario>)[action.payload],
                         lastRunDate: new Date()
                     }
                 },

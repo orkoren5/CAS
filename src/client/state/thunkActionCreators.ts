@@ -8,11 +8,11 @@ import {
     addScenarioSuccess,
     deleteScenarioRequest, deleteScenarioSuccess,
     editScenarioRequest,
-    editScenarioSuccess,
+    editScenarioSuccess, getScenariosRequest, getScenariosSuccess,
     runScenario as runScenarioAction
 } from "./actions";
 
-type ThunkActionCreator = (...args: any) => ThunkAction<void, GlobalState, any, AnyAction>;
+export type ThunkActionCreator = (...args: any) => ThunkAction<void, GlobalState, any, AnyAction>;
 
 export const uploadCSV: ThunkActionCreator = (file: File) => async (dispatch, getState) => {
     const formData = new FormData();
@@ -28,6 +28,27 @@ export const uploadCSV: ThunkActionCreator = (file: File) => async (dispatch, ge
 
     if (response.status === 200 || response.status === 204) {
 
+    }
+}
+
+export const fetchScenarios: ThunkActionCreator = () => async (dispatch, getState) => {
+    dispatch(getScenariosRequest());
+
+    const response = await fetch<ScenarioJSON[]>("/getScenarios", {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin'
+    });
+
+    const scenarioJsons = await response.json();
+    const scenarios = scenarioJsons.map(s => buildScenario(s)).reduce<Record<string, Scenario>>((acc, s) => {
+        acc[s.id] = s;
+        return acc;
+    }, {});
+
+    if (response.status === 200 || response.status === 204) {
+        dispatch(getScenariosSuccess(scenarios));
     }
 }
 

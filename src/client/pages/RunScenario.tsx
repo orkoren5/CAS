@@ -13,13 +13,15 @@ import StartTimeIcon from "../assets/icons/icon-start-time.svg";
 //@ts-ignore
 import DurationIcon from "../assets/icons/icon-duration.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {getRunStatus, getScenarioById} from "../state/selectors";
+import {getRunStatus, getScenarioById, getScenarios} from "../state/selectors";
 import ScenarioMetadata from "../components/app/scenarioMetadata";
 import ProviderTable from "../components/app/providerTable";
 import TargetTable from "../components/app/targetTable";
 import Station from "../components/runScenario/station";
 import {changeBTSStatus, changePAStatus, changeScannerStatus, changeStationMode, stopScenario} from "../state/actions";
 import dateformat from "dateformat";
+import {fetchScenarios} from "../state/thunkActionCreators";
+import usePrefetch from "../hooks/usePrefetch";
 
 const NUM_COLS = 2;
 
@@ -30,9 +32,14 @@ function RunScenario() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const loading = usePrefetch([getScenarios], [fetchScenarios]);
+    if (loading) {
+        return null;
+    }
+
     const handleEndRun = () => {
         dispatch(stopScenario(scenarioId));
-        history.push("/scenarios/" + scenario.id);
+        history.push("/scenarios");
     };
 
     const startRunTime = scenario.lastRunDate ? dateformat(scenario.lastRunDate, "hh:MM") : "";

@@ -1,6 +1,7 @@
 import type {GlobalState} from "../store";
 import {createSelector} from "reselect";
 import {getFilters, getSort} from "./filter/selectors";
+import {Scenario} from "../../common/types/Scenario";
 
 const defaultRunStatus = {
     status: "stopped",
@@ -10,6 +11,9 @@ const defaultRunStatus = {
 export const getScenarios = (state: GlobalState) => state.data.scenarios
 
 export const getFilteredAndSortedScenarios = createSelector(getScenarios, getFilters, getSort, (scenariosMap, filters, sort) => {
+    if (!scenariosMap) {
+        return  [];
+    }
     const scenarios = Object.values(scenariosMap).filter(scenario => {
         const dateField = filters.filterBy;
         return !dateField ||
@@ -25,5 +29,5 @@ export const getFilteredAndSortedScenarios = createSelector(getScenarios, getFil
     })
 });
 
-export const getScenarioById = (id: string) => (state: GlobalState) => state.data.scenarios[id];
+export const getScenarioById = (id: string) => (state: GlobalState) => (state.data.scenarios as Record<string, Scenario>)[id];
 export const getRunStatus = (id: string) => (state: GlobalState) => state.data.runStatus[id] || defaultRunStatus;
