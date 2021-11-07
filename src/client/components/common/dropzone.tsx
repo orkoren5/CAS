@@ -54,7 +54,7 @@ const Dropzone = (props: DropzoneProps) => {
             </svg>
             <span>Drag and drop here</span>
             <span>or</span>
-            <span className={styles.a}>browse</span>
+            <span>browse</span>
         </div>
     )
 }

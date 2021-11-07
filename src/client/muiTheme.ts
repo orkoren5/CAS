@@ -68,7 +68,7 @@ export default createTheme({
         MuiToggleButton: {
             root: {
                 textTransform: "unset",
-                color: colorMain,
+                color: "#ffffff",
                 border: "1px solid " + colorMain,
                 borderRadius: 0,
                 "&.Mui-selected": {
@@ -196,7 +196,8 @@ export default createTheme({
         },
         MuiCalendarPicker: {
             root: {
-                backgroundColor: "#072041"
+                backgroundColor: "#072041",
+                width: 280
             }
         },
         MuiPickerDay: {

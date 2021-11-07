@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: "#072041",
         color: theme.palette.primary.main,
+        width: "280px !important",
         "& svg": {
             color: theme.palette.primary.main
         },
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
 const usePaperStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: "#072041 !important",
+        transform: "translate(4px, 0) !important",
+        "& > div > div": {
+            width: 278
+        }
     },
 }));
 
@@ -57,7 +62,7 @@ export default function BasicDatePicker(props: BasicDatePickerProps) {
                 classes={styles}
                 value={props.value}
                 onChange={props.setValue}
-                renderInput={(params) => <TextField {...params} />}
+                renderInput={(params: any) => <TextField {...params} />}
             />
         </LocalizationProvider>
     );
