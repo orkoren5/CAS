@@ -52,6 +52,123 @@ const initialScenarios: ScenarioJSON[] = [
     }
 ];
 
+const providers = {
+    "partner": {
+        "title": "Partner",
+        "icon": "partner-logo.svg",
+        "btsList": {
+            "gsm": [
+                {
+                    "cellId": 1116,
+                    "band": 900,
+                    "channel": 1
+                },
+                {
+                    "cellId": 2222,
+                    "band": 2100,
+                    "channel": 8
+                },
+                {
+                    "cellId": 3333,
+                    "band": 2100,
+                    "channel": 3
+                },
+                {
+                    "cellId": 4423,
+                    "band": 900,
+                    "channel": 1
+                },
+                {
+                    "cellId": 4456,
+                    "band": 2100,
+                    "channel": 8
+                },
+                {
+                    "cellId": 7643,
+                    "band": 2100,
+                    "channel": 3
+                },
+                {
+                    "cellId": 9877,
+                    "band": 900,
+                    "channel": 1
+                },
+                {
+                    "cellId": 3965,
+                    "band": 2100,
+                    "channel": 8
+                },
+                {
+                    "cellId": 2706,
+                    "band": 2100,
+                    "channel": 3
+                }
+            ],
+            "umts": [
+                {
+                    "cellId": 1114,
+                    "band": 800,
+                    "channel": 5
+                },
+                {
+                    "cellId": 4432,
+                    "band": 2100,
+                    "channel": 1
+                },
+                {
+                    "cellId": 2020,
+                    "band": 790,
+                    "channel": 3
+                }
+            ],
+            "lte": [
+                {
+                    "cellId": 2222,
+                    "band": 900,
+                    "channel": 1
+                },
+                {
+                    "cellId": 3323,
+                    "band": 800,
+                    "channel": 8
+                },
+                {
+                    "cellId": 2021,
+                    "band": 2021,
+                    "channel": 7
+                }
+            ]
+        }
+    },
+    "cellcom": {
+        "title": "Cellcom",
+        "icon": "cellcom-logo.svg",
+        "btsList": {
+            "gsm": [],
+            "umts": [],
+            "lte": []
+        }
+    },
+    "hot-mobile": {
+        "title": "Hot Mobile",
+        "icon": "hot-mobile-logo.svg",
+        "btsList": {
+            "gsm": [],
+            "umts": [],
+            "lte": []
+        }
+    },
+    "suny": {
+        "title": "Suny",
+        "icon": "sunny-logo.svg",
+        "btsList": {
+            "gsm": [],
+            "umts": [],
+            "lte": []
+        }
+    }
+};
+
 const wrapFetch = <T extends any>(jsonResponse: T, timeout = 0): Promise<MockFetchRes<T>> => {
     return new Promise(resolve => {
         setTimeout(() => {
@@ -63,12 +180,10 @@ const wrapFetch = <T extends any>(jsonResponse: T, timeout = 0): Promise<MockFet
     });
 }
 
-const fetch = <T>(route: string, options: Record<string, any>): Promise<MockFetchRes<T>> => {
+const fetch = <T>(route: string, options?: Record<string, any>): Promise<MockFetchRes<T>> => {
     const urlParts = route.split("?");
     switch (urlParts[0]) {
         case "/uploadCSV": {
-            const csv = options.body.get("csv");
-
             const mockProviders: Provider[] = [
                 {
                     provider: "partner",
@@ -86,19 +201,21 @@ const fetch = <T>(route: string, options: Record<string, any>): Promise<MockFetc
 
             return wrapFetch(mockProviders, 1000);
         }
+        case "/configuration/providers.json": {
+            return wrapFetch(providers, 0);
+        }
         case "/addScenario": {
-            const scenario = options.body;
+            const scenario = options?.body || {};
             const now = new Date().toISOString();
             return wrapFetch({...scenario, id: now, creationDate: now, lastSaveDate: now}, 0);
         }
         case "/editScenario": {
-            const scenario = options.body;
+            const scenario = options?.body || {};
             const now = new Date().toISOString();
             return wrapFetch({...scenario, lastSaveDate: now}, 0);
         }
         case "/getScenarios": {
-            const list = initialScenarios;
-            return wrapFetch(list, 0);
+            return wrapFetch(initialScenarios, 0);
         }
         case "/deleteScenario":
         case "/runScenario":

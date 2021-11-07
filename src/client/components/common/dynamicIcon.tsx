@@ -1,7 +1,7 @@
 import React from "react";
 
 const DynamicIcon = ({ iconUrl }: { iconUrl: string }) => {
-    return <img src={"/assets/" + iconUrl}/>
+    return <img src={"assets/dynamic/" + iconUrl}/>
 }
 
 export default DynamicIcon;

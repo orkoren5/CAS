@@ -3,6 +3,7 @@ import {getConfiguration} from "./selectors";
 import {ConfState} from "./reducer";
 import {useEffect} from "react";
 import {setConfig} from "./actions";
+import fetch from "../../state/mockFetch";
 
 export const useGetConfig = (jsonName: keyof ConfState) => {
     const conf = useSelector(getConfiguration(jsonName));

@@ -37,9 +37,10 @@
     "start": "concurrently -k \"npm run start:server\" \"npm run start:client\"",
     "start:client": "webpack -w",
     "build:server": "babel src --out-dir dist --out-file-extension .js --ignore src/server/node_modules/**/* --only src/server,src/common --extensions .ts --copy-files --no-copy-ignored",
+    "build:client": "rimraf dist\\client && webpack --mode production",
     "prebuild:server": "mkdir dist\\common & mkdir dist\\server & copy src\\server\\package.json dist\\server\\package.json && cd dist\\server && npm install",
     "start:server": "npm run build:server && node dist/server",
-    "build": "webpack --mode production"
+    "build": "rimraf dist\\client && webpack --mode production"
   },
   "eslintConfig": {
     "extends": [
