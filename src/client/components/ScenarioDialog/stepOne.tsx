@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, useEffect, useState} from "react";
 import TextField from "../common/textField";
 import Dropzone from "../common/dropzone";
 import Cancel from "@material-ui/icons/Cancel";
@@ -40,6 +40,22 @@ const ScenarioTextField = (props: TextFieldProps & ScenarioTextFieldProps) => {
 }
 
 const StepOne: FC<StepOneProps> = (props: StepOneProps) => {
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        let id: NodeJS.Timeout;
+        if (props.fileStatus === FileStatus.UPLOADING) {
+            id = setTimeout(() => {
+                setProgress(progress + 10)
+            }, 100)
+        }
+        else if (props.fileStatus === FileStatus.UPLOADED) {
+            setProgress(100);
+        }
+
+        return () => clearTimeout(id);
+    }, [props.fileStatus, progress]);
+
     const handleFileSelected = (files: File[]) => {
         props.onFileSelected(files[0]);
     }
@@ -107,8 +123,8 @@ const StepOne: FC<StepOneProps> = (props: StepOneProps) => {
                 </div>
                 <LinearProgress
                     classes={{ barColorPrimary: "progress-bar" }}
-                    variant={props.fileStatus === FileStatus.UPLOADING ? "indeterminate" : "determinate"}
-                    value={100}
+                    variant={"determinate"}
+                    value={progress}
                 />
             </>
         }

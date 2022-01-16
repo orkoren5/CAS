@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between"
     },
     toggleButton: {
-        color: theme.palette.primary.main,
+        color: "white",
         border: "1px solid " + theme.palette.primary.main,
         borderRadius: 0,
         minWidth: 98,

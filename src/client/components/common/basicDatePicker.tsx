@@ -54,7 +54,7 @@ export default function BasicDatePicker(props: BasicDatePickerProps) {
     const btnStyles = useBtnStyles();
 
     return (
-        <LocalizationProvider dateAdapter={AdapterMoment}>
+        <LocalizationProvider dateAdapter={AdapterMoment} dateFormats={{ keyboardDate: "DD/MM/yyyy" }}>
             <DatePicker
                 PaperProps={{ classes: paperStyles }}
                 OpenPickerButtonProps={{ classes: btnStyles }}

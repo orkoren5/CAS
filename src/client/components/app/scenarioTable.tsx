@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
         float: "right"
     },
     descCell: {
-        maxWidth: 300
+        maxWidth: 100
     },
     headerCell: {
         cursor: "pointer",
